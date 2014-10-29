@@ -1,5 +1,8 @@
 CS236 Project
 
-Started planning the application architecture. 
-Sketched up UI
-Looked up different API 
+Started planning the application architecture. <br>
+Sketched up UI <br>
+Looked up different APIs <br>
+
+
+http://hansolahucsb.appspot.com/ 
