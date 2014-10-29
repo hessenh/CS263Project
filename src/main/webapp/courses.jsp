@@ -50,9 +50,9 @@
 			<%
 				
 				DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-			 	Key courseKey = KeyFactory.createKey("Courses", user.getUserId());
-			    Query q = new Query(courseKey);
-			    Query query = new Query(courseKey);
+			 	Key userKey = KeyFactory.createKey("Courses", user.getUserId());
+			    Query q = new Query(userKey);
+			    Query query = new Query(userKey);
 			    List<Entity> courses = ds.prepare(query).asList(FetchOptions.Builder.withLimit(5));
 			    if(courses.isEmpty()){
 			%>
@@ -63,7 +63,7 @@
 			            pageContext.setAttribute("course_content",
 			                    e.getProperty("courseName"));
 			%>
-				<a class="btn btn-default btn-lg btn-block" href="addCourse.jsp">${fn:escapeXml(course_content)}</a>
+				<a class="btn btn-default btn-lg btn-block" href="/viewCourse.jsp?courseName=${fn:escapeXml(course_content)}">${fn:escapeXml(course_content)}</a>
 			<%
 			    	}
 			    }

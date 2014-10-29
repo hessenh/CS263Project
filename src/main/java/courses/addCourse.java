@@ -26,8 +26,9 @@ public class addCourse extends HttpServlet {
 	     
 	     // Do something with key.
 	     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	     Key courseKey = KeyFactory.createKey("Courses",user.getUserId());
-	     Entity course = new Entity(courseKey);
+	     //Key courseKey = KeyFactory.createKey("Courses",user.getUserId());
+	     Key userKey = KeyFactory.createKey("Courses",user.getUserId());
+	     Entity course = new Entity("Courses",userKey);
 	     Date date = new Date();
 	     course.setProperty("date", date);
 	     course.setProperty("courseName", courseName);
