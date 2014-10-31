@@ -57,28 +57,40 @@
 	
 	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 	
+	Key courseKey = KeyFactory.createKey("Courses",course);
 	Filter courseFilter =new FilterPredicate("courseName",FilterOperator.EQUAL,course);
- 	
-	Query q = new Query("Courses").setFilter(courseFilter);
+	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
 	
-    List<Entity> courses = ds.prepare(q).asList(FetchOptions.Builder.withLimit(5));
-    if(courses.isEmpty()){
+	Query query = new Query("Courses").setFilter(courseFilter).setFilter(userFilter);
+	PreparedQuery pq = ds.prepare(query);
+	
+	Entity cName = pq.asSingleEntity();
+	
+	pageContext.setAttribute("course_name",cName.getProperty("courseName"));
 %>
-			<h1>No course...</h1>
+			<div class="col-md-6 col-lg-6">
+				<h1>${fn:escapeXml(course_name)}</h1>
+				<h2>Chapters:</h2>
+<%
+    Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter);
+    PreparedQuery pq2 = ds.prepare(q);
+    List<Entity> chapters = pq.asList(FetchOptions.Builder.withLimit(5));
+    System.out.println(chapters.size());
+    if(chapters.isEmpty()){
+%>
+	<h3>No chapters yet!</h3>
 <%
     }else{
-    	for (Entity e : courses) {
-            pageContext.setAttribute("value_content",
-                    e.getProperty("courseName"));
+    	for (Entity e : chapters) {
+    		System.out.println(e);
+            pageContext.setAttribute("chapter_content",
+                    e.getProperty("chapterName"));
 %>
-			<h1>${fn:escapeXml(value_content)}</h1>
+	<a class="btn btn-default btn-lg btn-block" href="/viewCourse.jsp?courseName=${fn:escapeXml(chapter_content)}">${fn:escapeXml(chapter_content)}</a>
 <%
     	}
     }
-%>
-
-			<div class="col-md-6 col-lg-6">
-				<h2>Chapters:</h2>
+%>	
 				<div class="btn-group btn-group-justified">
 					  <a href="#" class="btn btn-success addChapterBtn">Add Chapter!</a>
 					  <a href="#" class="btn btn-default courseSummary">Show Summary!</a>

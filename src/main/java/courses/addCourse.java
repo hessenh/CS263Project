@@ -28,10 +28,11 @@ public class addCourse extends HttpServlet {
 	     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	     //Key courseKey = KeyFactory.createKey("Courses",user.getUserId());
 	     Key userKey = KeyFactory.createKey("Courses",user.getUserId());
-	     Entity course = new Entity("Courses",userKey);
+	     Entity course = new Entity("Courses");//Removed key
 	     Date date = new Date();
 	     course.setProperty("date", date);
 	     course.setProperty("courseName", courseName);
+	     course.setProperty("user", user.getUserId());
 	 
 	     
 	     datastore.put(course);

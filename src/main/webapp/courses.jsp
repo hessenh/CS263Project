@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.google.appengine.api.datastore.Query.FilterOperator"%>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
@@ -9,6 +10,13 @@
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="com.google.appengine.api.datastore.Query" %>
+<%@ page import="com.google.appengine.api.datastore.Query.Filter" %>
+<%@ page import="com.google.appengine.api.datastore.Query.FilterPredicate" %>
+<%@ page import="com.google.appengine.api.datastore.Query.FilterOperator" %>
+<%@ page import="com.google.appengine.api.datastore.Query.CompositeFilter" %>
+<%@ page import="com.google.appengine.api.datastore.Query.CompositeFilterOperator" %>
+<%@ page import="com.google.appengine.api.datastore.Query" %>
+<%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.List" %>
 
@@ -50,10 +58,13 @@
 			<%
 				
 				DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-			 	Key userKey = KeyFactory.createKey("Courses", user.getUserId());
-			    Query q = new Query(userKey);
-			    Query query = new Query(userKey);
-			    List<Entity> courses = ds.prepare(query).asList(FetchOptions.Builder.withLimit(5));
+			 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
+			 	Key key = KeyFactory.createKey("Courses",user.getUserId());
+			 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+			 	
+			    Query query = new Query("Courses").setFilter(userFilter);
+			    PreparedQuery pq = ds.prepare(query);
+			    List<Entity> courses = pq.asList(FetchOptions.Builder.withLimit(5));
 			    if(courses.isEmpty()){
 			%>
 				<h3>No courses yet!</h3>
