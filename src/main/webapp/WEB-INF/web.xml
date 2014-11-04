@@ -110,6 +110,15 @@
         <url-pattern>/addCourse</url-pattern>
     </servlet-mapping>
     
+     <servlet>
+        <servlet-name>addChapter</servlet-name>
+        <servlet-class>chapters.AddChapter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addChapter</servlet-name>
+        <url-pattern>/addChapter</url-pattern>
+    </servlet-mapping>
+    
     
     
     <welcome-file-list>
