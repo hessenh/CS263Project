@@ -20,7 +20,7 @@
 <%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
 <html>
 <head>
-    <title>chapter</title>
+    <title>editChapter</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">
 </head>
 <body>
@@ -50,45 +50,39 @@
 </div>
 <br>
 <%
-	String chapter = request.getParameter("chapterName");
-	pageContext.setAttribute("chapterName",chapter);
-	
 	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-	
-	session = request.getSession(true);
-	session.setAttribute("chapter",chapter);
 	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
-	Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,chapter);
+	Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,session.getAttribute("chapter"));
 	
-    Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
-    PreparedQuery pq = ds.prepare(q);
-    
-    Entity chapterEntity= pq.asSingleEntity();
-  	
-    pageContext.setAttribute("chapterSummary",chapterEntity.getProperty("summary"));
-    
+	Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
+	PreparedQuery pq = ds.prepare(q);
+	
+	Entity chapterEntity= pq.asSingleEntity();
+		
+	pageContext.setAttribute("chapterSummary",chapterEntity.getProperty("summary"));
+	pageContext.setAttribute("chapterName",chapterEntity.getProperty("chapterName"));
 %>
+
 <div class="container">
 	<div class="row">
-		<div class="col-md-12 col-lg-12">
-			<div class="jumbotron jumbotron-subChapter">
-				<div class="jumbotron-subChapter-header">
-					<h2>${fn:escapeXml(chapterName)}</h2>
-				</div>
-				<div class="jumbotron-subChapter-content">
-					<h3>${fn:escapeXml(chapterSummary)}</h3><br>
-					
-				</div>
-				<div class="jumbotron-subChapter-footer">
-					<a class="btn btn-primary editSubChapter" href="/editChapter.jsp">Edit</a>
-			
-			
-				</div>
-					
+		<div class="col-md-10 col-lg-10">
+			<h2>Edit Sub Chapter</h2>
+			<input type="text" name="cName" class="form-control" value="${fn:escapeXml(chapterName)}">
+			<br>
+			<input type="text" name="cSummary"  class="form-control" value="${fn:escapeXml(chapterSummary)}">
+			<br>
+			<div class="btn-group btn-group-justified">
+				<form action="/editChapter" method="post">
+					<button type="submit" class="btn btn-primary submitSubChapter">Save</button>
+			  	</form>
+			  <a href="#" class="btn btn-danger deleteSubChapter">Delete</a>
+			  <a href="#" class="btn btn-default canelSubChapter">Cancel</a>
+			  
 			</div>
 		</div>
 	</div>
 </div>
+
 </body>
 </html>

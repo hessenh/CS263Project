@@ -119,6 +119,15 @@
         <url-pattern>/addChapter</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>editChapter</servlet-name>
+        <servlet-class>chapters.EditChapter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editChapter</servlet-name>
+        <url-pattern>/editChapter</url-pattern>
+    </servlet-mapping>
+    
     
     
     <welcome-file-list>
