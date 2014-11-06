@@ -68,18 +68,17 @@
 	<div class="row">
 		<div class="col-md-10 col-lg-10">
 			<h2>Edit Sub Chapter</h2>
-			<input type="text" name="cName" class="form-control" value="${fn:escapeXml(chapterName)}">
-			<br>
-			<input type="text" name="cSummary"  class="form-control" value="${fn:escapeXml(chapterSummary)}">
-			<br>
-			<div class="btn-group btn-group-justified">
-				<form action="/editChapter" method="post">
-					<button type="submit" class="btn btn-primary submitSubChapter">Save</button>
-			  	</form>
-			  <a href="#" class="btn btn-danger deleteSubChapter">Delete</a>
-			  <a href="#" class="btn btn-default canelSubChapter">Cancel</a>
-			  
-			</div>
+			<form action="/editChapter" method="post">
+				<input type="text" name="cName" class="form-control" value="${fn:escapeXml(chapterName)}">
+				<br>
+				<input type="text" name="cSummary"  class="form-control" value="${fn:escapeXml(chapterSummary)}">
+				<br>
+				<div class="btn-group btn-group-justified">
+					<a><button type="submit" name="save" class="btn btn-primary">Save</button></a>
+					<a><button href="#" name= "delete" class="btn btn-danger">Delete</button></a>
+					<a><button href="#" name="cancel" class="btn btn-default">Cancel</button></a>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

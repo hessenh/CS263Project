@@ -28,40 +28,43 @@ public class EditChapter extends HttpServlet {
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 		 
-		 String chapterName = request.getParameter("cName");
-	     String chapterSummary = request.getParameter("cSummary");
-	     
-	     System.out.println(request.getParameterNames().toString());
-	     System.out.println(chapterName);
-	     
-	     UserService userService = UserServiceFactory.getUserService();
+		 HttpSession session = request.getSession();
+		 UserService userService = UserServiceFactory.getUserService();
 	     User user = userService.getCurrentUser();
-	     
 	     DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-	 	
-	     HttpSession session = request.getSession();
-	     System.out.println("hei");
-	     
-	     Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
-	     Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
-	     Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,session.getAttribute("chapter"));
-	     Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
-	     PreparedQuery pq = ds.prepare(q);
-	     Entity chapterEntity= pq.asSingleEntity();
-	     if(!chapterName.equals(null)){
-	    	 chapterEntity.setProperty("chapterName",chapterName);
-	     }
-	     if(!chapterSummary.equals(null)){
-	    	 chapterEntity.setProperty("summary",chapterSummary);
-	     }
-
-	     
-	     
+	     String chapterName = request.getParameter("cName");
+	     String chapterSummary = request.getParameter("cSummary");
 		 
-	     
-	     ds.put(chapterEntity);
-	     response.sendRedirect("/viewChapter.jsp?chapterName=" + session.getAttribute("chapter"));
-	     
-	     
+		 //Update chapter
+		 if(request.getParameter("save") != null){
+		     Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
+		     Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+		     Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,session.getAttribute("chapter"));
+		     Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
+		     PreparedQuery pq = ds.prepare(q);
+		     Entity chapterEntity= pq.asSingleEntity();
+		     if(!chapterName.equals(null)){
+		    	 chapterEntity.setProperty("chapterName",chapterName);
+		     }
+		     if(!chapterSummary.equals(null)){
+		    	 chapterEntity.setProperty("summary",chapterSummary);
+		     }	     
+		     ds.put(chapterEntity);
+		     response.sendRedirect("/viewChapter.jsp?chapterName=" + session.getAttribute("chapter"));
+		 }
+		 else if(request.getParameter("delete") != null){
+			 Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
+		     Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+		     Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,session.getAttribute("chapter"));
+		     Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
+		     PreparedQuery pq = ds.prepare(q);
+		     Entity chapterEntity= pq.asSingleEntity();
+		     
+		     ds.delete(chapterEntity.getKey());
+			 response.sendRedirect("/viewCourse.jsp?courseName=" + session.getAttribute("course"));
+		 }
+		 else{
+			 response.sendRedirect("/viewChapter.jsp?chapterName=" + session.getAttribute("chapter"));
+		 }
 	 }
 	}

@@ -67,6 +67,7 @@
     Entity chapterEntity= pq.asSingleEntity();
   	
     pageContext.setAttribute("chapterSummary",chapterEntity.getProperty("summary"));
+    pageContext.setAttribute("courseName",session.getAttribute("course"));
     
 %>
 <div class="container">
@@ -74,15 +75,15 @@
 		<div class="col-md-12 col-lg-12">
 			<div class="jumbotron jumbotron-subChapter">
 				<div class="jumbotron-subChapter-header">
-					<h2>${fn:escapeXml(chapterName)}</h2>
+					<h2>Chapter: ${fn:escapeXml(chapterName)}</h2>
 				</div>
 				<div class="jumbotron-subChapter-content">
 					<h3>${fn:escapeXml(chapterSummary)}</h3><br>
 					
 				</div>
 				<div class="jumbotron-subChapter-footer">
-					<a class="btn btn-primary editSubChapter" href="/editChapter.jsp">Edit</a>
-			
+					<a class="btn btn-primary" href="/editChapter.jsp">Edit</a>
+					<a class="btn btn-primary" href="/viewCourse.jsp?courseName=${fn:escapeXml(courseName)}">Back</a>
 			
 				</div>
 					
