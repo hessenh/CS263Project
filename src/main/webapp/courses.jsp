@@ -37,6 +37,7 @@
 				UserService userService = UserServiceFactory.getUserService();
 				User user = userService.getCurrentUser();
 				if(user == null){
+					System.out.println("Out");
 			%>
       			<li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></li>
       		<%

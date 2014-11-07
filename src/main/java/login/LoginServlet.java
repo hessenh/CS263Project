@@ -17,10 +17,9 @@ public class LoginServlet extends HttpServlet {
  
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
- 
+		
 		resp.setContentType("text/html");
 		resp.getWriter().println("<h2>GAE - Integrating Google user account</h2>");
- 
 		if (user != null) {
  
 			resp.getWriter().println("Welcome, " + user.getNickname());
