@@ -20,7 +20,7 @@
 <%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
 <html>
 <head>
-    <title>courses</title>
+    <title>summary</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">
 </head>
 <body>
@@ -49,61 +49,52 @@
     </div>
 </div>
 <br>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12 col-lg-12">
 <%
-	String course = request.getParameter("courseName");
 	
-	session  = request.getSession(true);
-	session.setAttribute("course", course);
-	
-	pageContext.setAttribute("course_name",course);
-%>
-			<div class="col-md-6 col-lg-6">
-				<h1>${fn:escapeXml(course_name)}</h1>
-				<h2>Chapters:</h2>
-<%
 	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 	
-	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,course);
+	session = request.getSession(true);
+	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
 	
     Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter);
     PreparedQuery pq = ds.prepare(q);
     
-    List<Entity> chapters = pq.asList(FetchOptions.Builder.withLimit(5));
-    System.out.println(chapters.size());
-    if(chapters.isEmpty()){
+    List<Entity> summaryList= pq.asList(FetchOptions.Builder.withLimit(10));
+    
+    pageContext.setAttribute("courseName",session.getAttribute("course"));
 %>
-	<h3>No chapters yet!</h3>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-12">
+				<h2>Summary of ${fn:escapeXml(courseName)}</h2>
+
+<%
+    if(summaryList.isEmpty()){
+%>
+    		<h3>No chapters yet!</h3>
 <%
     }else{
-    	for (Entity e : chapters) {
-    		System.out.println(e);
-            pageContext.setAttribute("chapter_content",
-                    e.getProperty("chapterName"));
+ 	    	for (Entity e : summaryList) {
+ 	            pageContext.setAttribute("chapterName",e.getProperty("chapterName"));
+ 	            pageContext.setAttribute("chapterSummary",e.getProperty("summary"));
 %>
-				<a class="btn btn-default btn-lg btn-block" href="/viewChapter.jsp?chapterName=${fn:escapeXml(chapter_content)}">${fn:escapeXml(chapter_content)}</a>
+			<div class="jumbotron jumbotron-subChapter">
+				<div class="jumbotron-subChapter-header">
+					<h2>Chapter ${fn:escapeXml(chapterName)}</h2>
+				</div>
+				<div class="jumbotron-subChapter-content">
+					<h3>${fn:escapeXml(chapterSummary)}</h3><br>
+					
+				</div>
+			</div>
+
 <%
     	}
     }
-%>		
-				<br>
-				<div class="btn-group btn-group-justified">
-					  <a href="/addChapter.jsp" class="btn btn-success">Add Chapter!</a>
-					  <a href="/courseSummary.jsp" class="btn btn-default">Show Summary!</a>
-					  <a href="/courses.jsp" class="btn btn-primary">Back</a>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-6">
-				<h2>Tasks:</h2>
-			</div>
+%>				
 		</div>
 	</div>
 </div>
-
-
-
 </body>
 </html>
