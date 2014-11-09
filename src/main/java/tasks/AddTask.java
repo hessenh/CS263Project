@@ -53,7 +53,8 @@ public class AddTask extends HttpServlet {
 		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 		 syncCache.put(session.getAttribute("course")+taskName+user.getUserId(),task);
 		 
-		 syncCache.delete(session.getAttribute("course")+user.getUserId()+taskName);
+		 syncCache.delete(session.getAttribute("course")+user.getUserId()+"task");
+		 System.out.println("Putting " + taskName + " in memcache. Deleting tasklist from memcache");
 	     
 	     response.sendRedirect("/viewCourse.jsp?courseName=" + session.getAttribute("course"));
 	     

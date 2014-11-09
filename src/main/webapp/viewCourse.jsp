@@ -96,7 +96,7 @@
 	
     if(chapters.isEmpty()){
 %>
-	<h3>No chapters yet!</h3>
+
 <%
     }else{
     	for (Entity e : chapters) {

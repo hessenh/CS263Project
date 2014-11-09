@@ -70,12 +70,12 @@
 			 	if(courses==null){
 			 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 				 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
-				 	Key key = KeyFactory.createKey("Courses",user.getUserId());
+				 	
 				 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
 				 	
 				    Query query = new Query("Courses").setFilter(userFilter);
 				    PreparedQuery pq = ds.prepare(query);
-				    courses = pq.asList(FetchOptions.Builder.withLimit(5));
+				    courses = pq.asList(FetchOptions.Builder.withLimit(10));
 				    
 				    System.out.println("Putting courses in Memcache");
 				    syncCache.put(user.getUserId(),courses);
