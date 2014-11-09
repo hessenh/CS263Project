@@ -2,13 +2,13 @@
 
 ###Todo:
 ####Course
-- Adding 
-- UI
-- Memcach
+- Adding - Done
+- UI - Done
+- Memcach - Done
 
 ####Chapters
-- Adding/delete/update
-- UI
+- Adding/delete/update - Done
+- UI - Done
 - Memcache
 - Blobstore
 
@@ -18,5 +18,13 @@
 - Memcache
 - Blobstore
 
+####Discuss
+- UI
+- Adding
+- Commenting
+- Memcache
+
+
+--
 
 http://hansolahucsb.appspot.com/ 
