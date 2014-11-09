@@ -77,11 +77,11 @@
 				    PreparedQuery pq = ds.prepare(query);
 				    courses = pq.asList(FetchOptions.Builder.withLimit(5));
 				    
-				    System.out.println("Putting in Memcache");
+				    System.out.println("Putting courses in Memcache");
 				    syncCache.put(user.getUserId(),courses);
 			 	}
 			 	else{
-			 		System.out.println("Getting from Memcache");
+			 		System.out.println("Getting courses from Memcache");
 			 	}
 				
 			    if(courses.isEmpty()){

@@ -18,6 +18,10 @@
 <%@ page import="com.google.appengine.api.datastore.Query.CompositeFilterOperator" %>
 <%@ page import="com.google.appengine.api.datastore.Query" %>
 <%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
+<%@ page import="com.google.appengine.api.memcache.ErrorHandlers" %>
+<%@ page import="com.google.appengine.api.memcache.MemcacheServiceFactory"%>
+<%@ page import="com.google.appengine.api.memcache.MemcacheService" %>
+<%@ page import="java.util.logging.Level"%>
 <html>
 <head>
     <title>courses</title>
@@ -64,23 +68,37 @@
 				<h1>${fn:escapeXml(course_name)}</h1>
 				<h2>Chapters:</h2>
 <%
-	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+	List<Entity> chapters;
+
+	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 	
-	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,course);
-	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+	String key = course+user.getUserId();
+	chapters =  (List<Entity>) syncCache.get(key);
 	
-    Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter);
-    PreparedQuery pq = ds.prepare(q);
-    
-    List<Entity> chapters = pq.asList(FetchOptions.Builder.withLimit(5));
-    System.out.println(chapters.size());
+	if(chapters==null){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		
+		Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,course);
+		Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+		
+	    Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter);
+	    PreparedQuery pq = ds.prepare(q);
+	    
+	    chapters = pq.asList(FetchOptions.Builder.withLimit(5));
+		syncCache.put(key,chapters);
+		System.out.println("Putting chapters in memcache with key: " + key);
+	}
+	else{
+		System.out.println("Getting chapters from memcache");
+	}
+	
     if(chapters.isEmpty()){
 %>
 	<h3>No chapters yet!</h3>
 <%
     }else{
     	for (Entity e : chapters) {
-    		System.out.println(e);
             pageContext.setAttribute("chapter_content",
                     e.getProperty("chapterName"));
 %>

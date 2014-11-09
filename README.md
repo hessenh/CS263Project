@@ -9,7 +9,7 @@
 ####Chapters
 - Adding/delete/update - Done
 - UI - Done
-- Memcache
+- Memcache - Started
 - Blobstore
 
 ####Task
