@@ -1,4 +1,4 @@
-CS236 Project
+##CS236 Project
 
 Started planning the application architecture. <br>
 Sketched up UI <br>
