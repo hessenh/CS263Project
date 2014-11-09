@@ -1,18 +1,18 @@
 ##CS236 Project
 
-Todo:
-Course
-#- Adding 
-#- UI
-#- Memcach
+###Todo:
+####Course
+**- Adding** 
+**- UI**
+**- Memcach**
 
-Chapters
-#- Adding/delete/update
-#- UI
+####Chapters
+**- Adding/delete/update**
+**- UI**
 - Memcache
 - Blobstore
 
-Task
+####Task
 - Adding/delete/update
 - UI
 - Memcache
