@@ -1,8 +1,22 @@
 ##CS236 Project
 
-Started planning the application architecture. <br>
-Sketched up UI <br>
-Looked up different APIs <br>
+Todo:
+Course
+#- Adding 
+#- UI
+#- Memcach
+
+Chapters
+#- Adding/delete/update
+#- UI
+- Memcache
+- Blobstore
+
+Task
+- Adding/delete/update
+- UI
+- Memcache
+- Blobstore
 
 
 http://hansolahucsb.appspot.com/ 
