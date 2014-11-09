@@ -19,7 +19,10 @@
 <%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.List" %>
-
+<%@ page import="com.google.appengine.api.memcache.ErrorHandlers" %>
+<%@ page import="com.google.appengine.api.memcache.MemcacheServiceFactory"%>
+<%@ page import="com.google.appengine.api.memcache.MemcacheService" %>
+<%@ page import="java.util.logging.Level"%>
 <html>
 <head>
     <title>courses</title>
@@ -57,15 +60,30 @@
 		<div class="col-md-12 col-lg-12">
 			<h1>Courses</h1>
 			<%
-				
-				DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-			 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
-			 	Key key = KeyFactory.createKey("Courses",user.getUserId());
-			 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+				List<Entity> courses;
+			
+				MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+			 	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 			 	
-			    Query query = new Query("Courses").setFilter(userFilter);
-			    PreparedQuery pq = ds.prepare(query);
-			    List<Entity> courses = pq.asList(FetchOptions.Builder.withLimit(5));
+			 	courses =  (List<Entity>) syncCache.get(user.getUserId());
+			 
+			 	if(courses==null){
+			 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+				 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
+				 	Key key = KeyFactory.createKey("Courses",user.getUserId());
+				 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+				 	
+				    Query query = new Query("Courses").setFilter(userFilter);
+				    PreparedQuery pq = ds.prepare(query);
+				    courses = pq.asList(FetchOptions.Builder.withLimit(5));
+				    
+				    System.out.println("Putting in Memcache");
+				    syncCache.put(user.getUserId(),courses);
+			 	}
+			 	else{
+			 		System.out.println("Getting from Memcache");
+			 	}
+				
 			    if(courses.isEmpty()){
 			%>
 				<h3>No courses yet!</h3>
@@ -80,7 +98,6 @@
 			    	}
 			    }
 			%>	
-				
 			<a class="btn btn-success btn-lg btn-block addCourseBtn" href="addCourse.jsp">Add Course!</a>
 		</div>
 	</div>
