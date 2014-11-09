@@ -2,6 +2,7 @@ package chapters;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -20,6 +21,9 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.memcache.ErrorHandlers;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -35,6 +39,11 @@ public class EditChapter extends HttpServlet {
 	     String chapterName = request.getParameter("cName");
 	     String chapterSummary = request.getParameter("cSummary");
 		 
+	     //Memcache
+	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+	     String key = session.getAttribute("course")+chapterName+user.getUserId();
+	     
 		 //Update chapter
 		 if(request.getParameter("save") != null){
 		     Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
@@ -50,6 +59,8 @@ public class EditChapter extends HttpServlet {
 		    	 chapterEntity.setProperty("summary",chapterSummary);
 		     }	     
 		     ds.put(chapterEntity);
+			 syncCache.put(key,chapterEntity);
+		     
 		     response.sendRedirect("/viewChapter.jsp?chapterName=" + session.getAttribute("chapter"));
 		 }
 		 else if(request.getParameter("delete") != null){
@@ -61,6 +72,10 @@ public class EditChapter extends HttpServlet {
 		     Entity chapterEntity= pq.asSingleEntity();
 		     
 		     ds.delete(chapterEntity.getKey());
+		     syncCache.delete(key);
+		     //Remove from chapterlist also..
+		     syncCache.delete(session.getAttribute("course")+user.getUserId());
+		     
 			 response.sendRedirect("/viewCourse.jsp?courseName=" + session.getAttribute("course"));
 		 }
 		 else{

@@ -18,6 +18,10 @@
 <%@ page import="com.google.appengine.api.datastore.Query.CompositeFilterOperator" %>
 <%@ page import="com.google.appengine.api.datastore.Query" %>
 <%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
+<%@ page import="com.google.appengine.api.memcache.ErrorHandlers" %>
+<%@ page import="com.google.appengine.api.memcache.MemcacheServiceFactory"%>
+<%@ page import="com.google.appengine.api.memcache.MemcacheService" %>
+<%@ page import="java.util.logging.Level"%>
 <html>
 <head>
     <title>chapter</title>
@@ -49,22 +53,41 @@
     </div>
 </div>
 <br>
-<%
+<%	
+	
 	String chapter = request.getParameter("chapterName");
 	pageContext.setAttribute("chapterName",chapter);
 	
-	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-	
 	session = request.getSession(true);
 	session.setAttribute("chapter",chapter);
-	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
-	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
-	Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,chapter);
 	
-    Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
-    PreparedQuery pq = ds.prepare(q);
-    
-    Entity chapterEntity= pq.asSingleEntity();
+	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+	
+	String key = session.getAttribute("course")+chapter+user.getUserId();
+	
+	Entity chapterEntity = (Entity) syncCache.get(key);
+	
+	if(chapterEntity ==null){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		
+		
+		Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
+		Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+		Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,chapter);
+		
+	    Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter).setFilter(chapterFilter);
+	    PreparedQuery pq = ds.prepare(q);
+	    
+	    chapterEntity= pq.asSingleEntity();
+	    
+	    syncCache.put(key, chapterEntity);
+	    System.out.println("Putting chapter in memcache");
+	}
+	else{
+		System.out.println("Getting chapter from memcache");
+	}
+	
   	
     pageContext.setAttribute("chapterSummary",chapterEntity.getProperty("summary"));
     pageContext.setAttribute("courseName",session.getAttribute("course"));
