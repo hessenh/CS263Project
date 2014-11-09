@@ -2,13 +2,13 @@
 
 ###Todo:
 ####Course
-**- Adding** 
-**- UI**
-**- Memcach**
+- Adding 
+- UI
+- Memcach
 
 ####Chapters
-**- Adding/delete/update**
-**- UI**
+- Adding/delete/update
+- UI
 - Memcache
 - Blobstore
 
