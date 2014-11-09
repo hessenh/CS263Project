@@ -64,8 +64,9 @@
 	
 	pageContext.setAttribute("course_name",course);
 %>
+			<h1>${fn:escapeXml(course_name)}</h1>
 			<div class="col-md-6 col-lg-6">
-				<h1>${fn:escapeXml(course_name)}</h1>
+				
 				<h2>Chapters:</h2>
 <%
 	List<Entity> chapters;
@@ -116,6 +117,48 @@
 			</div>
 			<div class="col-md-6 col-lg-6">
 				<h2>Tasks:</h2>
+<%
+	List<Entity> tasks;
+
+	syncCache = MemcacheServiceFactory.getMemcacheService();
+	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+	
+	key = course+user.getUserId()+"task";
+	
+	tasks =  (List<Entity>) syncCache.get(key);
+	
+	if(tasks==null){
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		
+		Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,course);
+		Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
+		
+	    Query q = new Query("Tasks").setFilter(userFilter).setFilter(courseFilter);
+	    PreparedQuery pq = ds.prepare(q);
+	    
+	    tasks = pq.asList(FetchOptions.Builder.withLimit(5));
+		syncCache.put(key,tasks);
+		System.out.println("Putting tasks in memcache with key: " + key);
+	}
+	else{
+		System.out.println("Getting tasks from memcache");
+	}
+	
+    if(tasks.isEmpty()){
+%>
+	
+<%
+    }else{
+    	for (Entity e : tasks) {
+            pageContext.setAttribute("task_content",
+                    e.getProperty("taskName"));
+%>
+				<a class="btn btn-default btn-lg btn-block" href="/viewTask.jsp?taskName=${fn:escapeXml(task_content)}">${fn:escapeXml(task_content)}</a>
+<%
+    	}
+    }
+%>					
+				<a class="btn btn-success btn-lg btn-block" href="/addTask.jsp">Add Task!</a>
 			</div>
 		</div>
 	</div>
