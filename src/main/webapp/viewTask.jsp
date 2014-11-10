@@ -92,6 +92,7 @@
   	
     pageContext.setAttribute("taskInfo",taskEntity.getProperty("taskInfo"));
     pageContext.setAttribute("courseName",session.getAttribute("course"));
+    pageContext.setAttribute("fileKey",taskEntity.getProperty("file"));
     
 %>
 <div class="container">
@@ -107,6 +108,7 @@
 				</div>
 				<div class="jumbotron-subChapter-footer">
 					<a class="btn btn-primary" href="/editTask.jsp">Edit</a>
+					<a class="btn btn-primary" href="/serve?blob-key=${fn:escapeXml(fileKey)}">File</a>
 					<a class="btn btn-primary" href="/viewCourse.jsp?courseName=${fn:escapeXml(courseName)}">Back</a>
 			
 				</div>

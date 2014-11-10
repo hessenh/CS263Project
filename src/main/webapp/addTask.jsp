@@ -2,6 +2,12 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
+
+<%
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+%>
 <html>
 <head>
     <title>addTask</title>
@@ -39,11 +45,12 @@
 	<div class="row">
 		<div class="col-md-10 col-lg-10">
 			<h2>New Task</h2>
-			<form action="/addTask" method="post">
+			<form action="<%= blobstoreService.createUploadUrl("/addTask") %>" method="post" enctype="multipart/form-data">
+			
 				<input type="text" name="taskName" class="form-control" placeholder="Task Name">
 				<br>
 				<textarea class="form-control" rows="3" name="taskInfo" placeholder="Task"></textarea>
-				<input id="input-2" type="file" class="file" multiple="true" data-show-upload="false" data-show-caption="true">
+				 <input type="file" name="myFile">
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>

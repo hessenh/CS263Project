@@ -2,6 +2,7 @@ package tasks;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -26,6 +28,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class AddTask extends HttpServlet {
+	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     String taskName = request.getParameter("taskName");
@@ -39,8 +43,9 @@ public class AddTask extends HttpServlet {
 	     // Do something with key.
 	     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	     
-	     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-	     
+	     //Blobstore
+	     Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
+	     BlobKey blobKey = blobs.get("myFile");
 	 
 	     Entity task = new Entity("Tasks");//Removed key
 	     Date date = new Date();
@@ -49,6 +54,7 @@ public class AddTask extends HttpServlet {
 	     task.setProperty("user", user.getUserId());
 	     task.setProperty("course",session.getAttribute("course"));
 	     task.setProperty("taskInfo",taskInfo);
+	     task.setProperty("file",blobKey.getKeyString());
 	 
 	     
 	     datastore.put(task);
