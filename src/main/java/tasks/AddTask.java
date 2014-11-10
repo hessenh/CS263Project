@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -36,7 +38,9 @@ public class AddTask extends HttpServlet {
 	     HttpSession session = request.getSession();
 	     // Do something with key.
 	     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    ;
+	     
+	     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	     
 	 
 	     Entity task = new Entity("Tasks");//Removed key
 	     Date date = new Date();

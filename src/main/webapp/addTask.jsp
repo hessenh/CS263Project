@@ -43,6 +43,7 @@
 				<input type="text" name="taskName" class="form-control" placeholder="Task Name">
 				<br>
 				<textarea class="form-control" rows="3" name="taskInfo" placeholder="Task"></textarea>
+				<input id="input-2" type="file" class="file" multiple="true" data-show-upload="false" data-show-caption="true">
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
