@@ -137,6 +137,15 @@
         <url-pattern>/addTask</url-pattern>
     </servlet-mapping>
     
+     <servlet>
+        <servlet-name>editTask</servlet-name>
+        <servlet-class>tasks.EditTask</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editTask</servlet-name>
+        <url-pattern>/editTask</url-pattern>
+    </servlet-mapping>
+    
     
     
     <welcome-file-list>

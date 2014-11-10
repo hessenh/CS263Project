@@ -64,7 +64,7 @@
 	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 	
-	String key = session.getAttribute("course")+user.getUserId()+task;
+	String key = session.getAttribute("course")+task+user.getUserId();
 	
 	Entity taskEntity = (Entity) syncCache.get(key);
 	
@@ -83,7 +83,7 @@
 	    taskEntity= pq.asSingleEntity();
 	    
 	    syncCache.put(key, taskEntity);
-	    System.out.println("Putting task in memcache");
+	    System.out.println("Putting task in memcache with key: " + key);
 	}
 	else{
 		System.out.println("Getting task from memcache");
