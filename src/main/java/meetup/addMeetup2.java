@@ -40,7 +40,7 @@ public class addMeetup2 extends HttpServlet {
 	     meetup.setProperty("meetupInfo", session.getAttribute("meetupInfo"));
 	     meetup.setProperty("meetupDate", session.getAttribute("meetupDate"));
 	     meetup.setProperty("meetupTime", session.getAttribute("meetupTime"));
-	     meetup.setProperty("meetupAddres", meetupAddress);
+	     meetup.setProperty("meetupAddress", meetupAddress);
 	     meetup.setProperty("user", user.getUserId());
 	 
 	     
