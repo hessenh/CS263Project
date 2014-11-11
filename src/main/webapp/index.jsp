@@ -23,7 +23,7 @@
 				} else{
       		%>
       			<li><a href="/courses.jsp">Courses</a></li>
-      			<li><a href="/discuss">Discuss</a></li>
+      			<li><a href="/map.jsp">Discuss</a></li>
       			<li><a href="<%=userService.createLogoutURL(request.getRequestURI()) %>">Sign out</a></li>
       		<%
 			    }
