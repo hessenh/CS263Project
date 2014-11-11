@@ -97,24 +97,31 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 col-lg-12">
-			<div class="jumbotron jumbotron-subChapter">
-				<div class="jumbotron-subChapter-header">
+			<div class="col-md-6 col-lg-6">
+				<div class="jumbotron">
 					<h2>${fn:escapeXml(meetupName)}</h2>
-				</div>
-				<div class="jumbotron-subChapter-content">
+	
 					<h3>What - ${fn:escapeXml(meetupInfo)}</h3><br>
 					<h3>When - ${fn:escapeXml(meetupDate)}, ${fn:escapeXml(meetupTime)}</h3><br>
 					<h3>Where -  ${fn:escapeXml(meetupAddress)}</h3><br>
-				</div>
-				<div class="jumbotron-subChapter-footer">
+			
 					<a class="btn btn-primary" href="/editMeetup.jsp">Edit</a>
 					<a class="btn btn-primary" href="/meetupList.jsp">Back</a>
-			
+
 				</div>
-					
+			</div>
+			<div class="col-md-6 col-lg-6">
+				<div class="jumbotron">
+					<h2>Participants</h2>
+			
+					<h3>Hans-Olav</h3>
+				
+					<a class="btn btn-succsess">Join</a>
+				</div>	
 			</div>
 		</div>
 	</div>
 </div>
+
 </body>
 </html>
