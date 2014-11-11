@@ -137,7 +137,7 @@
         <url-pattern>/addTask</url-pattern>
     </servlet-mapping>
     
-     <servlet>
+    <servlet>
         <servlet-name>editTask</servlet-name>
         <servlet-class>tasks.EditTask</servlet-class>
     </servlet>
@@ -145,6 +145,25 @@
         <servlet-name>editTask</servlet-name>
         <url-pattern>/editTask</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>addMeetup</servlet-name>
+        <servlet-class>meetup.addMeetup</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addMeetup</servlet-name>
+        <url-pattern>/addMeetup</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>addMeetup2</servlet-name>
+        <servlet-class>meetup.addMeetup2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addMeetup2</servlet-name>
+        <url-pattern>/addMeetup2</url-pattern>
+    </servlet-mapping>
+    
+    
     
     
     

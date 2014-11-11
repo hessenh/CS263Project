@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Mapping ducks</title>
+        <title>Location</title>
         <link rel="stylesheet" href="/stylesheets/bootstrap.css">
         <meta charset="utf-8">
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
@@ -51,7 +51,7 @@
         </script>
     </head>
     <body  onload="init()"> 
-        <h1>Mapping Ducks</h1>
+        <h1>Choose location</h1>
         <div id="map_canvas" style="width:50%;height:400px"></div> 
         <div id="marker_data">
 	        <form id="createForm" action="/new" method="post" accept-charset="utf-8">

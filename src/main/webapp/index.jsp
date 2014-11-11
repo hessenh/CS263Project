@@ -24,6 +24,7 @@
       		%>
       			<li><a href="/courses.jsp">Courses</a></li>
       			<li><a href="/map.jsp">Discuss</a></li>
+      			<li><a href="/meetups.jsp">Meetups</a></li>
       			<li><a href="<%=userService.createLogoutURL(request.getRequestURI()) %>">Sign out</a></li>
       		<%
 			    }

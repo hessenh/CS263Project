@@ -25,7 +25,7 @@
 <%@ page import="java.util.logging.Level"%>
 <html>
 <head>
-    <title>courses</title>
+    <title>Meetup</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">
 </head>
 <body>
@@ -34,19 +34,18 @@
  	<div class="navbar-collapse collapse navbar-responsive-collapse">
     	<ul class="nav navbar-nav">
       		<li><a href="/index.jsp">Home</a></li>
-      		<li><a href="/courses.jsp">Courses</a></li>
-      		<li><a href="/discuss">Discuss</a></li>
-      		<li><a href="/meetups.jsp">Meetups</a></li>
 			<% 
 				UserService userService = UserServiceFactory.getUserService();
 				User user = userService.getCurrentUser();
 				if(user == null){
-					System.out.println("Out");
 			%>
       			<li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></li>
       		<%
 				} else{
       		%>
+      			<li><a href="/courses.jsp">Courses</a></li>
+      			<li><a href="/map.jsp">Discuss</a></li>
+      			<li><a href="/meetups.jsp">Meetups</a></li>
       			<li><a href="<%=userService.createLogoutURL(request.getRequestURI()) %>">Sign out</a></li>
       		<%
 			    }
@@ -59,51 +58,47 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 col-lg-12">
-			<h1>Courses</h1>
+			<h1>Meetups!</h1>
 			<%
-				List<Entity> courses;
+				List<Entity> meetups;
 			
 				MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			 	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 			 	
-			 	courses =  (List<Entity>) syncCache.get(user.getUserId());
+			 	meetups =  (List<Entity>) syncCache.get("meetups");
 			 
-			 	if(courses==null){
+			 	if(meetups==null){
 			 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-				 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
 				 	
-				 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
 				 	
-				    Query query = new Query("Courses").setFilter(userFilter);
+				    Query query = new Query("Meetups");
 				    PreparedQuery pq = ds.prepare(query);
-				    courses = pq.asList(FetchOptions.Builder.withLimit(10));
-				    
-				    System.out.println("Putting courses in Memcache");
-				    syncCache.put(user.getUserId(),courses);
+				    meetups = pq.asList(FetchOptions.Builder.withLimit(10));
+				    System.out.println(meetups.size());
+				    //System.out.println("Putting meetups in memcache. Key is 'meetups'");
+				    //syncCache.put("meetups",meetups);
 			 	}
 			 	else{
-			 		System.out.println("Getting courses from Memcache");
+			 		System.out.println("Getting meetups from memcache");
 			 	}
 				
-			    if(courses.isEmpty()){
+			    if(meetups.isEmpty()){
 			%>
-				<h3>No courses yet!</h3>
+				<h3>No meetups yet.. Create one! </h3>
 			<%
 			    }else{
-			    	for (Entity e : courses) {
-			            pageContext.setAttribute("course_content",
-			                    e.getProperty("courseName"));
+			    	for (Entity e : meetups) {
+			            pageContext.setAttribute("meetupName",e.getProperty("meetupName"));
 			%>
-				<a class="btn btn-default btn-lg btn-block" href="/viewCourse.jsp?courseName=${fn:escapeXml(course_content)}">${fn:escapeXml(course_content)}</a>
+				<a class="btn btn-default btn-lg btn-block" href="/viewMeetup.jsp?meetupName=${fn:escapeXml(meetupName)}">${fn:escapeXml(meetupName)}</a>
 			<%
 			    	}
 			    }
 			%>	
-			<a class="btn btn-success btn-lg btn-block addCourseBtn" href="addCourse.jsp">Add Course!</a>
+			<a class="btn btn-success btn-lg btn-block addCourseBtn" href="addMeetup.jsp">Create new meetup!</a>
 		</div>
 	</div>
 </div>
-
 
 </body>
 </html>

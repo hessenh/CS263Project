@@ -6396,3 +6396,10 @@ textarea:focus {
 .panel-default > .panel-heading {
   background-color: #464545;
 }
+.meetup {
+  margin-top: 5px;
+  padding: 10px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #303030;
+}
