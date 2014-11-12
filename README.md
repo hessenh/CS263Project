@@ -9,14 +9,13 @@
 ####Chapters
 - Adding/delete/update - Done
 - UI - Done
-- Memcache - Started
-- Blobstore
+- Memcache - Done
 
 ####Task
-- Adding/delete/update
-- UI
-- Memcache
-- Blobstore
+- Adding/delete/update - Done
+- UI - Done
+- Memcache - Done
+- Blobstore - Done
 
 ####Discuss
 - UI
@@ -24,6 +23,10 @@
 - Commenting
 - Memcache
 
+####Meetup
+- Ui
+- Create
+- View
 
 --
 
