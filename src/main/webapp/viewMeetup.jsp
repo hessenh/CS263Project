@@ -24,35 +24,69 @@
 <%@ page import="java.util.logging.Level"%>
 <html>
 <head>
-    <title>chapter</title>
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+	<title>ViewMeetup</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+	<meta charset="utf-8">
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
+	<script type="text/javascript">
+	    var map;
+	    var marker;
+	    var geocoder; //2a
+	    var initialLocation = new google.maps.LatLng(34.41396,-119.84895);
+	    function init() {
+	    	geocoder = new google.maps.Geocoder(); //2b
+	        var duckOptions = { //3
+	            zoom: 16,
+	            center: initialLocation,
+	            mapTypeId: google.maps.MapTypeId.STANDARD
+	        };
+	        map = new google.maps.Map(document.getElementById("map_canvas"), duckOptions); //4
+	        marker = new google.maps.Marker({ //5
+	            position: initialLocation, 
+	            map: map
+	        });
+	    }
+	    function placeMarker(lat,lng) {
+	    	document.getElementById("mapDiv").removeAttribute("hidden");
+	    	var location = new google.maps.LatLng(lat,lng);
+	    	
+        	marker.setMap(null);
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            //map.setCenter(location);
+        }
+	    
+	</script>
 </head>
-<body>
 
-<div class="navbar navbar-default">
- 	<div class="navbar-collapse collapse navbar-responsive-collapse">
-    	<ul class="nav navbar-nav">
-      		<li><a href="/index.jsp">Home</a></li>
-      		<li><a href="/courses.jsp">Courses</a></li>
-      		<li><a href="/discuss">Discuss</a></li>
-			<% 
-				UserService userService = UserServiceFactory.getUserService();
-				User user = userService.getCurrentUser();
-				if(user == null){
-			%>
-      			<li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></li>
-      		<%
-				} else{
-      		%>
-      			<li><a href="<%=userService.createLogoutURL(request.getRequestURI()) %>">Sign out</a></li>
-      		<%
-			    }
-			%>
-      		
-        </ul>
-    </div>
-</div>
-<br>
+
+<body onload="init()"> 
+	<div class="navbar navbar-default">
+	 	<div class="navbar-collapse collapse navbar-responsive-collapse">
+	    	<ul class="nav navbar-nav">
+	      		<li><a href="/index.jsp">Home</a></li>
+	      		<li><a href="/courses.jsp">Courses</a></li>
+	      		<li><a href="/discuss">Discuss</a></li>
+				<% 
+					UserService userService = UserServiceFactory.getUserService();
+					User user = userService.getCurrentUser();
+					if(user == null){
+				%>
+	      			<li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></li>
+	      		<%
+					} else{
+	      		%>
+	      			<li><a href="<%=userService.createLogoutURL(request.getRequestURI()) %>">Sign out</a></li>
+	      		<%
+				    }
+				%>
+	      		
+	        </ul>
+	    </div>
+	</div>
+	<br>
 <%	
 	
 	String meetupName = request.getParameter("meetupName");
@@ -85,14 +119,13 @@
 	else{
 		System.out.println("Getting meetup from memcache");
 	}
-	
-  	
     pageContext.setAttribute("meetupName",meetupEntity.getProperty("meetupName"));
     pageContext.setAttribute("meetupInfo",meetupEntity.getProperty("meetupInfo"));
     pageContext.setAttribute("meetupDate",meetupEntity.getProperty("meetupDate"));
     pageContext.setAttribute("meetupTime",meetupEntity.getProperty("meetupTime"));
     pageContext.setAttribute("meetupAddress",meetupEntity.getProperty("meetupAddress"));
-    
+    pageContext.setAttribute("meetupLat",meetupEntity.getProperty("meetupLat"));
+    pageContext.setAttribute("meetupLng",meetupEntity.getProperty("meetupLng"));
 %>
 <div class="container">
 	<div class="row">
@@ -107,6 +140,7 @@
 			
 					<a class="btn btn-primary" href="/editMeetup.jsp">Edit</a>
 					<a class="btn btn-primary" href="/meetupList.jsp">Back</a>
+					<a onclick="placeMarker(${fn:escapeXml(meetupLat)},${fn:escapeXml(meetupLng)})" class="btn btn-primary">Show on map!</a>
 
 				</div>
 			</div>
@@ -120,6 +154,21 @@
 				</div>	
 			</div>
 		</div>
+		<div class="col-md-12 col-lg-12">
+			<div class="col-md-1 col-lg-1">
+			</div>
+			<div id ="mapDiv" hidden="true" class="col-md-8 col-lg-10">
+				
+				<div id="map_canvas" style="width:100%; height:400px"></div>
+			</div>
+			<div class="col-md-1 col-lg-1">
+			</div> 
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>		
+		<h5>..</h5>
 	</div>
 </div>
 

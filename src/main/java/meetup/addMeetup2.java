@@ -26,6 +26,8 @@ public class addMeetup2 extends HttpServlet {
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     String meetupAddress = request.getParameter("address");
+	     String lat = request.getParameter("lat");
+	     String lng = request.getParameter("lng");
 	     
 	     UserService userService = UserServiceFactory.getUserService();
 	     User user = userService.getCurrentUser();
@@ -41,6 +43,8 @@ public class addMeetup2 extends HttpServlet {
 	     meetup.setProperty("meetupDate", session.getAttribute("meetupDate"));
 	     meetup.setProperty("meetupTime", session.getAttribute("meetupTime"));
 	     meetup.setProperty("meetupAddress", meetupAddress);
+	     meetup.setProperty("meetupLat", lat);
+	     meetup.setProperty("meetupLng", lng);
 	     meetup.setProperty("user", user.getUserId());
 	 
 	     
