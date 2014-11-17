@@ -51,13 +51,7 @@
 	            position: location, 
 	            map: map
 	        });
-	    	
-	    	
-	    	
-        	
-              //map.setCenter(location);
         }
-	    
 	</script>
 </head>
 <body> 
@@ -115,17 +109,57 @@
 			
 					<a class="btn btn-primary" href="/editMeetup.jsp">Edit</a>
 					<a class="btn btn-primary" href="/meetupList.jsp">Back</a>
-					<a onclick="placeMarker(${fn:escapeXml(meetupLat)},${fn:escapeXml(meetupLng)})" class="btn btn-primary">Show on map!</a>
-
+					<a onclick="placeMarker(${fn:escapeXml(meetupLat)},${fn:escapeXml(meetupLng)})" class="btn btn-primary">Show on map! </a>
 				</div>
 			</div>
+			
+			
+			
+			
 			<div class="col-md-6 col-lg-6">
 				<div class="jumbotron">
 					<h2>Participants</h2>
-			
-					<h3>Hans-Olav</h3>
-				
-					<a class="btn btn-succsess">Join</a>
+<%
+					Boolean isAttending = false;
+					UserService userService = UserServiceFactory.getUserService();
+					User user = userService.getCurrentUser();	
+					DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+					Filter meetupFilter = new FilterPredicate("meetupName",FilterOperator.EQUAL,meetupName);
+					
+					Query q = new Query("MeeupAttending").setFilter(meetupFilter);
+					PreparedQuery pq = ds.prepare(q);
+					
+					List<Entity> meetupAttending = pq.asList(FetchOptions.Builder.withLimit(10));
+					if(meetupAttending.isEmpty()){
+						%>
+							<h3>No participants!</h3>
+						<%
+				    }else{
+				    	for (Entity e : meetupAttending) {
+				    		if(e.getProperty("userId").equals(user.getUserId())){
+				    			isAttending = true;
+				    		}
+				            pageContext.setAttribute("meetup_person",
+				                    e.getProperty("username"));
+						%>
+							<h3> ${fn:escapeXml(meetup_person)}</h3>
+						<%
+						}
+				    }
+					if(!isAttending){
+			    	%>
+				    <form action="/meetupAttend" method="post">
+				    	<button name="attend" type="submit" class="btn btn-primary">Join</button>
+					</form>
+					<%
+					}else{
+					%>
+					<form action="/meetupAttend" method="post">
+				    	<button name="leave" type="submit" class="btn btn-primary">Leave</button>
+					</form>
+					<%
+					}
+					%>
 				</div>	
 			</div>
 		</div>

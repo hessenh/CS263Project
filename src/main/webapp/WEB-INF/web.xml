@@ -163,6 +163,14 @@
         <url-pattern>/addMeetup2</url-pattern>
     </servlet-mapping>
     
+	<servlet>
+        <servlet-name>meetupAttend</servlet-name>
+        <servlet-class>meetup.MeetupAttend</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>meetupAttend</servlet-name>
+        <url-pattern>/meetupAttend</url-pattern>
+    </servlet-mapping>
     
     
     
