@@ -32,37 +32,37 @@
 	    var map;
 	    var marker;
 	    var geocoder; //2a
-	    var initialLocation = new google.maps.LatLng(34.41396,-119.84895);
-	    function init() {
+	   
+	    function placeMarker(lat,lng) {
+	    	var location = new google.maps.LatLng(lat,lng);
+	    	document.getElementById("mapDiv").removeAttribute("hidden");
+	    	
 	    	geocoder = new google.maps.Geocoder(); //2b
 	        var duckOptions = { //3
 	            zoom: 16,
-	            center: initialLocation,
+	            center: location,
 	            mapTypeId: google.maps.MapTypeId.STANDARD
 	        };
+	    	
+	       
+	        
 	        map = new google.maps.Map(document.getElementById("map_canvas"), duckOptions); //4
 	        marker = new google.maps.Marker({ //5
-	            position: initialLocation, 
+	            position: location, 
 	            map: map
 	        });
-	    }
-	    function placeMarker(lat,lng) {
-	    	document.getElementById("mapDiv").removeAttribute("hidden");
-	    	var location = new google.maps.LatLng(lat,lng);
 	    	
-        	marker.setMap(null);
-            marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-            //map.setCenter(location);
+	    	
+	    	
+        	
+              //map.setCenter(location);
         }
 	    
 	</script>
 </head>
 
 
-<body onload="init()"> 
+<body> 
 	<div class="navbar navbar-default">
 	 	<div class="navbar-collapse collapse navbar-responsive-collapse">
 	    	<ul class="nav navbar-nav">
