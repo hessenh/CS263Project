@@ -172,6 +172,14 @@
         <url-pattern>/meetupAttend</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>addQuestion</servlet-name>
+        <servlet-class>discuss.AddQuestion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addQuestion</servlet-name>
+        <url-pattern>/addQuestion</url-pattern>
+    </servlet-mapping>
     
     
     

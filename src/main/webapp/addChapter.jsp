@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>courses</title>
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/boot2.css">
 </head>
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>

@@ -21,7 +21,7 @@
 <html>
 <head>
     <title>editChapter</title>
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/boot2.css">
 </head>
 <body>
 

@@ -25,62 +25,67 @@
 <%@ page import="java.util.logging.Level"%>
 <html>
 <head>
-    <title>courses</title>
+    <title>Home</title>
     <link rel="stylesheet" href="/stylesheets/boot2.css">
 </head>
+
+
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12 col-lg-12">
-			<h1>Courses</h1>
-			<%
-				List<Entity> courses;
-				UserService userService = UserServiceFactory.getUserService();
-				User user = userService.getCurrentUser();
-			
-				MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-			 	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-			 	
-			 	courses =  (List<Entity>) syncCache.get(user.getUserId());
-			 
-			 	if(courses==null){
-			 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-				 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
-				 	
-				 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
-				 	
-				    Query query = new Query("Courses").setFilter(userFilter);
-				    PreparedQuery pq = ds.prepare(query);
-				    courses = pq.asList(FetchOptions.Builder.withLimit(10));
-				    
-				    System.out.println("Putting courses in Memcache");
-				    syncCache.put(user.getUserId(),courses);
-			 	}
-			 	else{
-			 		System.out.println("Getting courses from Memcache");
-			 	}
-				
-			    if(courses.isEmpty()){
-			%>
-				<h3>No courses yet!</h3>
-			<%
-			    }else{
-			    	for (Entity e : courses) {
-			            pageContext.setAttribute("course_content",
-			                    e.getProperty("courseName"));
-			%>
-				<a class="btn btn-default btn-lg btn-block" href="/viewCourse.jsp?courseName=${fn:escapeXml(course_content)}">${fn:escapeXml(course_content)}</a>
-			<%
-			    	}
-			    }
-			%>	
-			<a class="btn btn-success btn-lg btn-block addCourseBtn" href="addCourse.jsp">Add Course!</a>
-		</div>
+<header class="homeHeader">
+    <div class="container">
+        <!-- <span class="brand-name">Start Tutor</span> -->
+        <h1>Find your answer!</h1>
+        <br>
+        <a href="/browsQuestions" class="btn btn-default"> Browse questions</a>
+        <a href="/newQuestion.jsp" class="btn btn-default">Ask a question</a>
+    </div>
+</header>
+<div class="col-lg-12">
+	<div class="container">
+	    <div class="row home-intro text-center">
+	        <div class="col-lg-12">
+<!-- 	            <h2 class="tagline">Free, fast, and easy to use.</h2> -->
+	            <p class="lead">Ask whatever you want!</p>
+	            <hr class="small">
+	        </div>
+	    </div>
+<%
+List<Entity> questions;
+UserService userService = UserServiceFactory.getUserService();
+User user = userService.getCurrentUser();
+
+DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+
+Query query = new Query("Questions");
+PreparedQuery pq = ds.prepare(query);
+questions = pq.asList(FetchOptions.Builder.withLimit(9));
+if(!questions.isEmpty()){
+	for (Entity e : questions) {
+        pageContext.setAttribute("questionTitle",
+                e.getProperty("questionTitle"));
+        pageContext.setAttribute("questionInfo",
+                e.getProperty("questionInfo"));
+%>
+	    <div class="col-lg-4 col-sm-4">
+	        <div class="thumbnail">
+	            <div class="caption">
+	            	<blockquote>
+				  		<h3>${fn:escapeXml(questionTitle)}</h3>
+					</blockquote>
+					<blockquote>
+				  		<p>${fn:escapeXml(questionInfo)}</p>
+					</blockquote>
+					
+	                <a href="/viewQuestion.jsp?questionTitle=${fn:escapeXml(questionTitle)}" class="btn btn-default">View</a>
+	            </div>
+	        </div>
+	    </div>
+<%
+	}
+}
+%>
 	</div>
 </div>
-
-
 </body>
-</html>

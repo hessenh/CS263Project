@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/boot2.css">
 </head>
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
@@ -16,7 +16,7 @@
 			<div class="jumbotron meetup">
 				<h2>Meetups!</h2>
 				<p>Find out if there is a meetup or start a new meetup!</p>
-				<p><a class="btn btn-primary btn-lg" href="/meetupList.jsp">Start!</a></p>
+				<p><a class="btn btn-primary btn-lg" href="/meetupList.jsp">Continue!</a></p>
 			</div>	
 		</div>
 	</div>

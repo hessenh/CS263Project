@@ -25,62 +25,25 @@
 <%@ page import="java.util.logging.Level"%>
 <html>
 <head>
-    <title>courses</title>
+    <title>Home</title>
     <link rel="stylesheet" href="/stylesheets/boot2.css">
 </head>
+
+
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-12 col-lg-12">
-			<h1>Courses</h1>
-			<%
-				List<Entity> courses;
-				UserService userService = UserServiceFactory.getUserService();
-				User user = userService.getCurrentUser();
-			
-				MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-			 	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-			 	
-			 	courses =  (List<Entity>) syncCache.get(user.getUserId());
-			 
-			 	if(courses==null){
-			 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-				 	//Key userKey = KeyFactory.createKey("Courses", user.getUserId());
-				 	
-				 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
-				 	
-				    Query query = new Query("Courses").setFilter(userFilter);
-				    PreparedQuery pq = ds.prepare(query);
-				    courses = pq.asList(FetchOptions.Builder.withLimit(10));
-				    
-				    System.out.println("Putting courses in Memcache");
-				    syncCache.put(user.getUserId(),courses);
-			 	}
-			 	else{
-			 		System.out.println("Getting courses from Memcache");
-			 	}
-				
-			    if(courses.isEmpty()){
-			%>
-				<h3>No courses yet!</h3>
-			<%
-			    }else{
-			    	for (Entity e : courses) {
-			            pageContext.setAttribute("course_content",
-			                    e.getProperty("courseName"));
-			%>
-				<a class="btn btn-default btn-lg btn-block" href="/viewCourse.jsp?courseName=${fn:escapeXml(course_content)}">${fn:escapeXml(course_content)}</a>
-			<%
-			    	}
-			    }
-			%>	
-			<a class="btn btn-success btn-lg btn-block addCourseBtn" href="addCourse.jsp">Add Course!</a>
+		<div class="col-md-10 col-lg-10">
+			<h2>New question</h2>
+			<form action="/addQuestion" method="post">
+				<input type="text" name="questionTitle" class="form-control" placeholder="Question title"><br>
+				<input type="text" name="questionInfo" class="form-control" placeholder="Question Info">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
 		</div>
 	</div>
 </div>
 
-
 </body>
-</html>

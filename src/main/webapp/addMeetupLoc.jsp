@@ -6,7 +6,7 @@
 <html>
     <head>
         <title>Location</title>
-        <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+        <link rel="stylesheet" href="/stylesheets/boot2.css">
         <meta charset="utf-8">
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
         <script type="text/javascript">

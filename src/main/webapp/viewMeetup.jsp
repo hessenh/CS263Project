@@ -25,7 +25,7 @@
 <html>
 <head>
 	<title>ViewMeetup</title>
-	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+	<link rel="stylesheet" href="/stylesheets/boot2.css">
 	<meta charset="utf-8">
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
 	<script type="text/javascript">
@@ -96,82 +96,68 @@
     pageContext.setAttribute("meetupLat",meetupEntity.getProperty("meetupLat"));
     pageContext.setAttribute("meetupLng",meetupEntity.getProperty("meetupLng"));
 %>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12 col-lg-12">
-			<div class="col-md-6 col-lg-6">
-				<div class="jumbotron">
-					<h2>${fn:escapeXml(meetupName)}</h2>
-	
-					<h3>What - ${fn:escapeXml(meetupInfo)}</h3><br>
-					<h3>When - ${fn:escapeXml(meetupDate)}, ${fn:escapeXml(meetupTime)}</h3><br>
-					<h3>Where -  ${fn:escapeXml(meetupAddress)}</h3><br>
-			
-					<a class="btn btn-primary" href="/editMeetup.jsp">Edit</a>
-					<a class="btn btn-primary" href="/meetupList.jsp">Back</a>
-					<a onclick="placeMarker(${fn:escapeXml(meetupLat)},${fn:escapeXml(meetupLng)})" class="btn btn-primary">Show on map! </a>
-				</div>
-			</div>
-			
-			
-			
-			
-			<div class="col-md-6 col-lg-6">
-				<div class="jumbotron">
-					<h2>Participants</h2>
+<header class="createMeetupheader">
+	<div class="container">
+		<h2>${fn:escapeXml(meetupName)}</h2>
+		<p>What: ${fn:escapeXml(meetupInfo)}</p>
+		<p>When: ${fn:escapeXml(meetupDate)} at ${fn:escapeXml(meetupTime)}</p>
+		<p>Where: ${fn:escapeXml(meetupAddress)}</p>
+		<a class="btn btn-primary" href="/meetupList.jsp">Back</a>
+		<a onclick="placeMarker(${fn:escapeXml(meetupLat)},${fn:escapeXml(meetupLng)})" class="btn btn-primary">Show on map! </a>
+	</div>
+</header>
+<div class="col-lg-10 col-lg-offset-2">
+	<div class="col-lg-4">
+		<h3>Participants:</h3>
 <%
-					Boolean isAttending = false;
-					UserService userService = UserServiceFactory.getUserService();
-					User user = userService.getCurrentUser();	
-					DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-					Filter meetupFilter = new FilterPredicate("meetupName",FilterOperator.EQUAL,meetupName);
-					
-					Query q = new Query("MeeupAttending").setFilter(meetupFilter);
-					PreparedQuery pq = ds.prepare(q);
-					
-					List<Entity> meetupAttending = pq.asList(FetchOptions.Builder.withLimit(10));
-					if(meetupAttending.isEmpty()){
-						%>
-							<h3>No participants!</h3>
-						<%
-				    }else{
-				    	for (Entity e : meetupAttending) {
-				    		if(e.getProperty("userId").equals(user.getUserId())){
-				    			isAttending = true;
-				    		}
-				            pageContext.setAttribute("meetup_person",
-				                    e.getProperty("username"));
-						%>
-							<h3> ${fn:escapeXml(meetup_person)}</h3>
-						<%
-						}
-				    }
-					if(!isAttending){
-			    	%>
-				    <form action="/meetupAttend" method="post">
-				    	<button name="attend" type="submit" class="btn btn-primary">Join</button>
-					</form>
-					<%
-					}else{
-					%>
-					<form action="/meetupAttend" method="post">
-				    	<button name="leave" type="submit" class="btn btn-primary">Leave</button>
-					</form>
-					<%
-					}
-					%>
-				</div>	
-			</div>
-		</div>
-		<div class="col-md-12 col-lg-12">
-			<div class="col-md-1 col-lg-1">
-			</div>
-			<div id ="mapDiv" hidden="true" class="col-md-8 col-lg-10">
-				
-				<div id="map_canvas" style="width:100%; height:400px"></div>
-			</div>
-			<div class="col-md-1 col-lg-1">
-			</div> 
+		Boolean isAttending = false;
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Filter meetupFilter = new FilterPredicate("meetupName",FilterOperator.EQUAL,meetupName);
+		
+		Query q = new Query("MeeupAttending").setFilter(meetupFilter);
+		PreparedQuery pq = ds.prepare(q);
+		
+		List<Entity> meetupAttending = pq.asList(FetchOptions.Builder.withLimit(10));
+		if(meetupAttending.isEmpty()){
+			%>
+				<h3>No participants!</h3>
+			<%
+	    }else{
+    		for (Entity e : meetupAttending) {
+	    		if(e.getProperty("userId").equals(user.getUserId())){
+	    			isAttending = true;
+	    		}
+	            pageContext.setAttribute("meetup_person",
+	                    e.getProperty("username"));
+			%>
+				<blockquote>
+					<h3> ${fn:escapeXml(meetup_person)}</h3>
+				</blockquote>
+			<%
+			}
+  			}
+		if(!isAttending){
+	   		%>
+		<form action="/meetupAttend" method="post">
+	   		<button name="attend" type="submit" class="btn btn-primary">Join</button>
+		</form>
+		<%
+		}else{
+			%>
+		<form action="/meetupAttend" method="post">
+		   	<button name="leave" type="submit" class="btn btn-primary">Leave</button>
+		</form>
+			<%
+		}
+			%>
+	</div>	
+		
+	<div class="col-lg-8">
+		<div id ="mapDiv" hidden="true" class="col-md-12 col-lg-12">
+			<div id="map_canvas" style="width:100%; height:400px"></div>
 		</div>
 	</div>
 </div>
