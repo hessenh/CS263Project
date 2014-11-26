@@ -1,4 +1,4 @@
-package chapters;
+package discuss;
 
 import java.io.IOException;
 import java.util.Date;
@@ -23,39 +23,36 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-public class AddChapter extends HttpServlet {
+public class addAnswer extends HttpServlet {
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
-	     String chapterName = request.getParameter("chapterName");
-	     String summary = request.getParameter("summary");
+	     String answer = request.getParameter("answer");
+	    
 	     
 	     UserService userService = UserServiceFactory.getUserService();
 	     User user = userService.getCurrentUser();
-	     
-	     
 	     HttpSession session = request.getSession();
-	     // Do something with key.
+	     
 	     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	     //Key courseKey = KeyFactory.createKey("Courses",user.getUserId());
-	     Key userKey = KeyFactory.createKey("Chapters",user.getUserId());
-	     Entity chapter = new Entity("Chapters");//Removed key
+
+	     Entity questionAnswer = new Entity("QuestionAnswer");//Removed key
 	     Date date = new Date();
-	     chapter.setProperty("date", date);
-	     chapter.setProperty("chapterName", chapterName);
-	     chapter.setProperty("user", user.getUserId());
-	     chapter.setProperty("course",session.getAttribute("course"));
-	     chapter.setProperty("summary",summary);
+	     questionAnswer.setProperty("date", date);
+	     questionAnswer.setProperty("questionTitle", session.getAttribute("questionTitle"));
+	     questionAnswer.setProperty("questionInfo", session.getAttribute("questionInfo"));
+	     questionAnswer.setProperty("answer",answer);
+	     questionAnswer.setProperty("userId",user.getUserId());
 	 
 	     
-	     datastore.put(chapter);
+	     datastore.put(questionAnswer);
 	     
-	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-		 syncCache.put(session.getAttribute("course")+chapterName+user.getUserId(),chapter);
-		 
-		 syncCache.delete(session.getAttribute("course")+user.getUserId());
+//	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+//		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+//		 syncCache.put(session.getAttribute("course")+chapterName+user.getUserId(),chapter);
+//		 
+//		 syncCache.delete(session.getAttribute("course")+user.getUserId());
 	     
-	     response.sendRedirect("/viewCourse.jsp?courseName=" + session.getAttribute("course"));
+	     response.sendRedirect("/viewQuestion.jsp?questionTitle=" + session.getAttribute("questionTitle"));
 	     
 	     
 	 }

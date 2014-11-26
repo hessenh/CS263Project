@@ -32,6 +32,7 @@
 <%	
 	
 	String questionTitle = request.getParameter("questionTitle");
+	session.setAttribute("questionTitle", questionTitle);
 	pageContext.setAttribute("questionTitle",questionTitle);
 	
 	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
@@ -46,7 +47,7 @@
 		
 		
 		Filter questionFilter =new FilterPredicate("questionTitle",FilterOperator.EQUAL,questionTitle);
-		
+	
 	    Query q = new Query("Questions").setFilter(questionFilter);
 	    PreparedQuery pq = ds.prepare(q);
 	    
@@ -58,6 +59,7 @@
 	else{
 		System.out.println("Getting question from memcache");
 	}
+	session.setAttribute("questionInfo", questionEntity.getProperty("questionInfo"));
     pageContext.setAttribute("questionTitle",questionEntity.getProperty("questionTitle"));
     pageContext.setAttribute("questionInfo",questionEntity.getProperty("questionInfo"));
 %>
@@ -76,14 +78,14 @@
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Filter questionTitleFilter = new FilterPredicate("questionTitle",FilterOperator.EQUAL,questionTitle);
-		
-		Query q = new Query("QuestionAnswer").setFilter(questionTitleFilter);
+		Filter questionInfoFilter = new FilterPredicate("questionInfo",FilterOperator.EQUAL,session.getAttribute("questionInfo"));
+		Query q = new Query("QuestionAnswer").setFilter(questionTitleFilter).setFilter(questionInfoFilter);
 		PreparedQuery pq = ds.prepare(q);
 		
 		List<Entity> questionAnswers = pq.asList(FetchOptions.Builder.withLimit(10));
 		if(questionAnswers.isEmpty()){
 			%>
-				<h3>No answers!</h3>
+				<h3></h3>
 			<%
 	    }else{
     		for (Entity e : questionAnswers) {
@@ -97,8 +99,10 @@
 			}
   			}
 		%>
-		<form action="/meetupAttend" method="post">
-		   	<button name="leave" type="submit" class="btn btn-primary">Leave</button>
+		<h3>Leave a comment!</h3>
+		<form action="/addAnswer" method="post">
+			<input type="text" name="answer" class="form-control" placeholder="Comment..">
+		   	<button name="answer" type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>	
 </div>

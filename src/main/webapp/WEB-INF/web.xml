@@ -112,11 +112,19 @@
     
      <servlet>
         <servlet-name>addChapter</servlet-name>
-        <servlet-class>chapters.AddChapter</servlet-class>
+        <servlet-class>chapters.AddChapterEq</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addChapter</servlet-name>
         <url-pattern>/addChapter</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>addChapterWorker</servlet-name>
+        <servlet-class>chapters.AddChapterWorker</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addChapterWorker</servlet-name>
+        <url-pattern>/addChapterWorker</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -179,6 +187,14 @@
     <servlet-mapping>
         <servlet-name>addQuestion</servlet-name>
         <url-pattern>/addQuestion</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name>addAnswer</servlet-name>
+        <servlet-class>discuss.addAnswer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addAnswer</servlet-name>
+        <url-pattern>/addAnswer</url-pattern>
     </servlet-mapping>
     
     

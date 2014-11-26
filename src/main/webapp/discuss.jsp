@@ -38,7 +38,6 @@
         <!-- <span class="brand-name">Start Tutor</span> -->
         <h1>Find your answer!</h1>
         <br>
-        <a href="/browsQuestions" class="btn btn-default"> Browse questions</a>
         <a href="/newQuestion.jsp" class="btn btn-default">Ask a question</a>
     </div>
 </header>
@@ -63,10 +62,13 @@ PreparedQuery pq = ds.prepare(query);
 questions = pq.asList(FetchOptions.Builder.withLimit(9));
 if(!questions.isEmpty()){
 	for (Entity e : questions) {
+		//int i = (e.getProperty("questionTitle").toString().length() < 10)?e.getProperty("questionTitle").toString().length():10;
         pageContext.setAttribute("questionTitle",
                 e.getProperty("questionTitle"));
+        
+        int j = (e.getProperty("questionInfo").toString().length() < 10)?e.getProperty("questionInfo").toString().length():10;
         pageContext.setAttribute("questionInfo",
-                e.getProperty("questionInfo"));
+                e.getProperty("questionInfo").toString().substring(0, j)+"...");
 %>
 	    <div class="col-lg-4 col-sm-4">
 	        <div class="thumbnail">
