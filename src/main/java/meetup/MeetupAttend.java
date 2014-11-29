@@ -58,9 +58,9 @@ public class MeetupAttend extends HttpServlet {
 	     }
 	     
 	     
-//	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-//		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-//		 syncCache.delete(user.getUserId());
+	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+		 syncCache.delete(session.getAttribute("meetupName")+"parList");
 		 
 	     response.sendRedirect("/viewMeetup.jsp?meetupName="+session.getAttribute("meetupName"));
 	     

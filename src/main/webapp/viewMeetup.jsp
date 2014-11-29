@@ -113,14 +113,25 @@
 		Boolean isAttending = false;
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
+		syncCache = MemcacheServiceFactory.getMemcacheService();
+		syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 		
-		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-		Filter meetupFilter = new FilterPredicate("meetupName",FilterOperator.EQUAL,meetupName);
+		List<Entity> meetupAttending = (List<Entity>) syncCache.get(meetupName+"parList");
+		if(meetupAttending==null){
+			DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+			Filter meetupFilter = new FilterPredicate("meetupName",FilterOperator.EQUAL,meetupName);
+			
+			Query q = new Query("MeeupAttending").setFilter(meetupFilter);
+			PreparedQuery pq = ds.prepare(q);
+			
+			meetupAttending = pq.asList(FetchOptions.Builder.withLimit(10));
+			syncCache.put(meetupName+"parList",meetupAttending);
+			System.out.println("Putting parList in memcache");
+		}
+		else{
+			System.out.println("Getting parList from memcache");
+		}
 		
-		Query q = new Query("MeeupAttending").setFilter(meetupFilter);
-		PreparedQuery pq = ds.prepare(q);
-		
-		List<Entity> meetupAttending = pq.asList(FetchOptions.Builder.withLimit(10));
 		if(meetupAttending.isEmpty()){
 			%>
 				<h3>No participants!</h3>

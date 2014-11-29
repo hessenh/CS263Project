@@ -51,8 +51,8 @@
 				    PreparedQuery pq = ds.prepare(query);
 				    meetups = pq.asList(FetchOptions.Builder.withLimit(10));
 				    System.out.println(meetups.size());
-				    //System.out.println("Putting meetups in memcache. Key is 'meetups'");
-				    //syncCache.put("meetups",meetups);
+				    System.out.println("Putting meetups in memcache. Key is 'meetups'");
+				    syncCache.put("meetups",meetups);
 			 	}
 			 	else{
 			 		System.out.println("Getting meetups from memcache");
