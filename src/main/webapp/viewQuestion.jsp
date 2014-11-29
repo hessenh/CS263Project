@@ -75,14 +75,24 @@
 <%
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
+		syncCache = MemcacheServiceFactory.getMemcacheService();
+		syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+		List<Entity> questionAnswers = (List<Entity>) syncCache.get(questionTitle+"answer");
+		if(questionAnswers == null){
+			DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+			Filter questionTitleFilter = new FilterPredicate("questionTitle",FilterOperator.EQUAL,questionTitle);
+			Filter questionInfoFilter = new FilterPredicate("questionInfo",FilterOperator.EQUAL,session.getAttribute("questionInfo"));
+			Query q = new Query("QuestionAnswer").setFilter(questionTitleFilter).setFilter(questionInfoFilter);
+			PreparedQuery pq = ds.prepare(q);
+			
+			questionAnswers = pq.asList(FetchOptions.Builder.withLimit(10));
+			System.out.println("Putting qAnswers in memcache");
+			syncCache.put(questionTitle+"answer",questionAnswers);
+		}
+		else{
+			System.out.println("Getting qAnswers from memcache");
+		}
 		
-		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-		Filter questionTitleFilter = new FilterPredicate("questionTitle",FilterOperator.EQUAL,questionTitle);
-		Filter questionInfoFilter = new FilterPredicate("questionInfo",FilterOperator.EQUAL,session.getAttribute("questionInfo"));
-		Query q = new Query("QuestionAnswer").setFilter(questionTitleFilter).setFilter(questionInfoFilter);
-		PreparedQuery pq = ds.prepare(q);
-		
-		List<Entity> questionAnswers = pq.asList(FetchOptions.Builder.withLimit(10));
 		if(questionAnswers.isEmpty()){
 			%>
 				<h3></h3>

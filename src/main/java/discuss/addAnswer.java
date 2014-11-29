@@ -46,11 +46,10 @@ public class addAnswer extends HttpServlet {
 	     
 	     datastore.put(questionAnswer);
 	     
-//	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
-//		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
-//		 syncCache.put(session.getAttribute("course")+chapterName+user.getUserId(),chapter);
-//		 
-//		 syncCache.delete(session.getAttribute("course")+user.getUserId());
+	     MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+		 syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
+		 
+		 syncCache.delete(session.getAttribute("questionTitle")+"answer");
 	     
 	     response.sendRedirect("/viewQuestion.jsp?questionTitle=" + session.getAttribute("questionTitle"));
 	     

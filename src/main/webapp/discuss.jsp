@@ -55,11 +55,24 @@ List<Entity> questions;
 UserService userService = UserServiceFactory.getUserService();
 User user = userService.getCurrentUser();
 
-DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 
-Query query = new Query("Questions");
-PreparedQuery pq = ds.prepare(query);
-questions = pq.asList(FetchOptions.Builder.withLimit(9));
+
+
+questions = (List<Entity>) syncCache.get("questions");
+
+if(questions ==null){
+	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+	Query query = new Query("Questions");
+	PreparedQuery pq = ds.prepare(query);
+	questions = pq.asList(FetchOptions.Builder.withLimit(9));
+	syncCache.put("questions",questions);
+	System.out.println("Putting questions in memcache");
+}
+else{
+	System.out.println("Getting questions from memcache");
+}
 if(!questions.isEmpty()){
 	for (Entity e : questions) {
 		//int i = (e.getProperty("questionTitle").toString().length() < 10)?e.getProperty("questionTitle").toString().length():10;
