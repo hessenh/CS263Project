@@ -104,6 +104,7 @@
 		<p>Where: ${fn:escapeXml(meetupAddress)}</p>
 		<a class="btn btn-primary" href="/meetupList.jsp">Back</a>
 		<a onclick="placeMarker(${fn:escapeXml(meetupLat)},${fn:escapeXml(meetupLng)})" class="btn btn-primary">Show on map! </a>
+		<a class="btn btn-primary" href="/SignInTwitter.jsp">Tweet!</a>
 	</div>
 </header>
 <div class="col-lg-10 col-lg-offset-2">

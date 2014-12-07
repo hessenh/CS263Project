@@ -21,6 +21,7 @@
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>${appengine.target.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -52,7 +53,28 @@
 		    <artifactId>jersey-container-servlet-core</artifactId>
 		    <version>2.2</version>
 		</dependency>
+		 <dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.googleplus</groupId>
+			<artifactId>google-plus-java-api</artifactId>
+		    <version>0.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20141113</version>
+		</dependency>
+		<dependency>
+           <groupId>org.twitter4j</groupId>
+           <artifactId>twitter4j-core</artifactId>
+           <version>[4.0,)</version>
+       </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

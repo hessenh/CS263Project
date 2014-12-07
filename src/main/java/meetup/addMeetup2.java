@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import plus.notifyGooglePlus;
+import twitter.confTwitter;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -47,6 +50,7 @@ public class addMeetup2 extends HttpServlet {
 	     meetup.setProperty("meetupLng", lng);
 	     meetup.setProperty("user", user.getUserId());
 	 
+	     confTwitter twitter = new confTwitter();
 	     
 	     datastore.put(meetup);
 	     
