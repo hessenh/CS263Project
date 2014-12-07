@@ -28,11 +28,12 @@
 				<p>Find out if there is a meetup or start a new meetup!</p>
 				<p><a class="btn btn-primary btn-lg" href="/meetupList.jsp">Continue!</a></p>
 			</div>	
+			<h3>Twitter</h3>
 		</div>
 	</div>
 </div>
 
-<h3>Twitter</h3>
+
 <%
 ConfigurationBuilder builder = new ConfigurationBuilder();
 
@@ -45,7 +46,7 @@ Configuration configuration = builder.build();
 TwitterFactory tf = new TwitterFactory(configuration);
 Twitter twitter = tf.getInstance();
 
-Query query = new Query("NTNU");
+Query query = new Query("CS263Project");
 QueryResult result = null;
 try {
 	result = twitter.search(query);

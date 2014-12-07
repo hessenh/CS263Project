@@ -15,7 +15,7 @@ public class PostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String text = "Check out this meetup! #CS263Project \n"+ request.getSession().getAttribute("meetupName")+"is going to be awsome! \n" 
-        + "http://http://hansolahucsb.appspot.com/viewMeetup.jsp?meetupName=$"+request.getSession().getAttribute("meetupName")+ "\n"+request.getParameter("text");
+        + "http://http://hansolahucsb.appspot.com/viewMeetup.jsp?meetupName="+request.getSession().getAttribute("meetupName")+ "\n"+request.getParameter("text");
         Twitter twitter = (Twitter)request.getSession().getAttribute("twitter");
         
         try {
