@@ -18,16 +18,16 @@
 - Blobstore - Done
 
 ####Discuss
-- UI
-- Adding
-- Commenting
-- Memcache
+- UI - Done
+- Adding - Done
+- Commenting - Done 
+- Memcache - Done
 
 ####Meetup
-- Ui
-- Create
-- View
-
+- Ui - Done
+- Create - Done
+- View - Done
+- Memcache - Done
 --
 
 http://hansolahucsb.appspot.com/ 
