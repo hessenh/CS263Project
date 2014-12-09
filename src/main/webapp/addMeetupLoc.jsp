@@ -63,10 +63,11 @@
 			<div class="row">
 				<div class="col-md-10 col-lg-10">
 			        <h1>Choose location</h1>
+			        <h4>Click on the map to choose location</h4>
 			        <div id="map_canvas" style="width:100%;height:400px"></div> 
 			        <div id="marker_data">
 				        <form id="createForm" action="/addMeetup2" method="post" accept-charset="utf-8">
-				            <input type="text" name="address" id="address" class="form-control">
+				            <input type="text" name="address" id="address" class="form-control" required>
 				            <input type="hidden" name="lat" id="lat" class="form-control">
 				            <input type="hidden" name="lng" id="lng" class="form-control">
 				            <button type="submit" class="btn btn-primary">Save</button>

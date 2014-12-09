@@ -12,10 +12,10 @@
 		<div class="col-md-10 col-lg-10">
 			<h2>New meetup</h2>
 			<form action="/addMeetup" method="post">
-				<input type="text" name="meetupName" class="form-control" placeholder="Title"><br>
-				<input type="text" name="meetupInfo" class="form-control" placeholder="Info"><br>
-				<input type="date" name="meetupDate">
-				<input type="time" name="meetupTime"><br>
+				<input type="text" name="meetupName" class="form-control" placeholder="Title" required><br>
+				<input type="text" name="meetupInfo" class="form-control" placeholder="Info" required><br>
+				<input type="date" name="meetupDate" required>
+				<input type="time" name="meetupTime" required><br>
 				<button type="submit" class="btn btn-primary">Next</button>
 			</form>
 		</div>

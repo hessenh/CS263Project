@@ -15,7 +15,7 @@
 		<div class="col-md-10 col-lg-10">
 			<h2>New Course</h2>
 			<form action="/addCourse" method="post">
-				<input type="text" name="courseName" class="form-control" placeholder="Course Name">
+				<input type="text" name="courseName" class="form-control" placeholder="Course Name" required>
 				<button type="submit" class="btn btn-primary submitCourse">Submit</button>
 			</form>
 		</div>

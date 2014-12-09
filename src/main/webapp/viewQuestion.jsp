@@ -111,7 +111,7 @@
 		%>
 		<h3>Leave a comment!</h3>
 		<form action="/addAnswer" method="post">
-			<input type="text" name="answer" class="form-control" placeholder="Comment..">
+			<input type="text" name="answer" class="form-control" placeholder="Comment.." required>
 		   	<button name="answer" type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>	

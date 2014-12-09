@@ -60,8 +60,10 @@ public class EditChapter extends HttpServlet {
 		     }	     
 		     ds.put(chapterEntity);
 			 syncCache.put(key,chapterEntity);
+			 syncCache.delete(session.getAttribute("course")+user.getUserId());
+			 syncCache.delete(session.getAttribute("course")+""+session.getAttribute("chapter")+ user.getUserId());
 		     
-		     response.sendRedirect("/viewChapter.jsp?chapterName=" + session.getAttribute("chapter"));
+		     response.sendRedirect("/viewChapter.jsp?chapterName=" + chapterName);
 		 }
 		 else if(request.getParameter("delete") != null){
 			 Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));

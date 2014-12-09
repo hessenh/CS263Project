@@ -48,9 +48,9 @@
 		<div class="col-md-10 col-lg-10">
 			<h2>Edit Sub Chapter</h2>
 			<form action="/editChapter" method="post">
-				<input type="text" name="cName" class="form-control" value="${fn:escapeXml(chapterName)}">
+				<input type="text" name="cName" class="form-control" value="${fn:escapeXml(chapterName)}" required>
 				<br>
-				<input type="text" name="cSummary"  class="form-control" value="${fn:escapeXml(chapterSummary)}">
+				<input type="text" name="cSummary"  class="form-control" value="${fn:escapeXml(chapterSummary)}"required>
 				<br>
 				<div class="btn-group btn-group-justified">
 					<a><button type="submit" name="save" class="btn btn-primary">Save</button></a>

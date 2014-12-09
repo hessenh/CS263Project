@@ -23,10 +23,10 @@
 			<h2>New Task</h2>
 			<form action="<%= blobstoreService.createUploadUrl("/addTask") %>" method="post" enctype="multipart/form-data">
 			
-				<input type="text" name="taskName" class="form-control" placeholder="Task Name">
+				<input type="text" name="taskName" class="form-control" placeholder="Task Name" required>
 				<br>
-				<textarea class="form-control" rows="3" name="taskInfo" placeholder="Task"></textarea>
-				 <input type="file" name="myFile">
+				<textarea class="form-control" rows="3" name="taskInfo" placeholder="Task" required></textarea>
+				 <input type="file" name="myFile" required>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>

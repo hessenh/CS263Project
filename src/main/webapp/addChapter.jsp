@@ -16,9 +16,9 @@
 		<div class="col-md-10 col-lg-10">
 			<h2>New Chapter</h2>
 			<form action="/addChapter" method="post">
-				<input type="text" name="chapterName" class="form-control" placeholder="Chapter Name">
+				<input type="text" name="chapterName" class="form-control" placeholder="Chapter Name" required>
 				<br>
-				<textarea class="form-control" rows="3" name="summary" placeholder="Summary"></textarea>
+				<textarea class="form-control" rows="3" name="summary" placeholder="Summary" required></textarea>
 				<button type="submit" class="btn btn-primary submitChapter">Submit</button>
 			</form>
 		</div>

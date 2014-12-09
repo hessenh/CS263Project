@@ -38,8 +38,8 @@
 		<div class="col-md-10 col-lg-10">
 			<h2>New question</h2>
 			<form action="/addQuestion" method="post">
-				<input type="text" name="questionTitle" class="form-control" placeholder="Question title"><br>
-				<input type="text" name="questionInfo" class="form-control" placeholder="Question Info">
+				<input type="text" name="questionTitle" class="form-control" placeholder="Question title" required><br>
+				<input type="text" name="questionInfo" class="form-control" placeholder="Question Info" required>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
