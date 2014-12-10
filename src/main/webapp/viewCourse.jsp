@@ -35,6 +35,11 @@
 <%
 	UserService userService = UserServiceFactory.getUserService();
 	User user = userService.getCurrentUser();
+	if( user ==null){
+		response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
+	}
+	else{
+	
 	String course = request.getParameter("courseName");
 	
 	session  = request.getSession(true);
@@ -141,6 +146,8 @@
 		</div>
 	</div>
 </div>
+<%
+}%>
 
 
 

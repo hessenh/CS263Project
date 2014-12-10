@@ -57,6 +57,13 @@
 <body> 
 	<jsp:include page="/navbar.jsp"></jsp:include>
 <%	
+	UserService userService = UserServiceFactory.getUserService();
+	User user = userService.getCurrentUser();
+	if( user ==null){
+		System.out.println(request.getRequestURI());
+		response.sendRedirect(userService.createLoginURL(request.getRequestURI()+"?meetupName=" + request.getParameter("meetupName")));
+	}
+	else{
 	
 	String meetupName = request.getParameter("meetupName");
 	pageContext.setAttribute("meetupName",meetupName);
@@ -112,8 +119,6 @@
 		<h3>Participants:</h3>
 <%
 		Boolean isAttending = false;
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
 		syncCache = MemcacheServiceFactory.getMemcacheService();
 		syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 		
@@ -173,6 +178,7 @@
 		</div>
 	</div>
 </div>
+<%} %>
 
 </body>
 </html>
