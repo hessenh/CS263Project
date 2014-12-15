@@ -1,4 +1,4 @@
-package chapters;
+package queuesAndWorkers;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
 
@@ -17,22 +17,24 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 
-public class AddChapterEq extends HttpServlet {
+public class AddAnswerEq extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String chapterName = request.getParameter("chapterName");
-	    String summary = request.getParameter("summary");
-	    HttpSession session = request.getSession();
+    	HttpSession session = request.getSession();
+    	
+    	String answer = request.getParameter("answer");
+    	
+	    
 	    UserService userService = UserServiceFactory.getUserService();
 	    User user = userService.getCurrentUser();
 	    
 	   
         // Add the task to the default queue.
         Queue queue = QueueFactory.getDefaultQueue();
-        queue.add(withUrl("/addChapterWorker").param("chapterName", chapterName).param("summary",summary).param("userID",user.getUserId()).param("course", (String) session.getAttribute("course")));
+        queue.add(withUrl("/addQuestionAnswer").param("answer", answer).param("userID",user.getUserId()).param("questionTitle", (String) session.getAttribute("questionTitle")).param("questionInfo", (String) session.getAttribute("questionInfo")));
         
         
-        response.sendRedirect("/viewCourse.jsp?courseName=" + session.getAttribute("course"));
+        response.sendRedirect("/viewQuestion.jsp?questionTitle=" + session.getAttribute("questionTitle"));
       
     }
 }

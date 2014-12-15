@@ -1,4 +1,4 @@
-package chapters;
+package queuesAndWorkers;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
 
@@ -17,11 +17,13 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 
-public class AddChapterEq extends HttpServlet {
+public class AddMeetupEq extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String chapterName = request.getParameter("chapterName");
-	    String summary = request.getParameter("summary");
+    	String meetupAddress = request.getParameter("address");
+	    String lat = request.getParameter("lat");
+	    String lng = request.getParameter("lng");
+	    
 	    HttpSession session = request.getSession();
 	    UserService userService = UserServiceFactory.getUserService();
 	    User user = userService.getCurrentUser();
@@ -29,10 +31,17 @@ public class AddChapterEq extends HttpServlet {
 	   
         // Add the task to the default queue.
         Queue queue = QueueFactory.getDefaultQueue();
-        queue.add(withUrl("/addChapterWorker").param("chapterName", chapterName).param("summary",summary).param("userID",user.getUserId()).param("course", (String) session.getAttribute("course")));
+        queue.add(withUrl("/addMeetupWorker").param("meetupName", (String) session.getAttribute("meetupName"))
+        		.param("meetupInfo", (String) session.getAttribute("meetupInfo"))
+        		.param("meetupDate", (String) session.getAttribute("meetupDate"))
+        		.param("meetupTime", (String) session.getAttribute("meetupTime"))
+        		.param("meetupAddress", meetupAddress)
+        		.param("meetupLat", lat)
+        		.param("meetupLng", lng)
+        		.param("user", user.getUserId()));
         
         
-        response.sendRedirect("/viewCourse.jsp?courseName=" + session.getAttribute("course"));
-      
+        response.sendRedirect("/meetupList.jsp");
+	    
     }
 }
