@@ -11,9 +11,18 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class confTwitter.
+ */
 public class confTwitter {
+	
+	/** The twitter. */
 	private Twitter twitter;
 
+	/**
+	 * Instantiates a new conf twitter.
+	 */
 	public confTwitter() {
 		ConfigurationBuilder builder = new ConfigurationBuilder();
 //		cb.setDebugEnabled(true)
@@ -42,6 +51,12 @@ public class confTwitter {
 	    
 		
 	}
+	
+	/**
+	 * Gets the twitter.
+	 *
+	 * @return the twitter
+	 */
 	public Twitter getTwitter(){
 		return this.twitter;
 	}

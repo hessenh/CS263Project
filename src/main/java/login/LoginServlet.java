@@ -10,8 +10,16 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
  
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginServlet.
+ */
 @SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet {
+	
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
  

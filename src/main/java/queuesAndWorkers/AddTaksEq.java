@@ -21,9 +21,18 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddTaksEq.
+ */
 public class AddTaksEq extends HttpServlet {
+	
+	/** The blobstore service. */
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	
+    /* (non-Javadoc)
+     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	String taskName = request.getParameter("taskName");

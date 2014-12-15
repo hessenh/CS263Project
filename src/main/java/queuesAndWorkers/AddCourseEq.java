@@ -18,8 +18,15 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddCourseEq.
+ */
 public class AddCourseEq extends HttpServlet {
 
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	String chapterName = request.getParameter("courseName");

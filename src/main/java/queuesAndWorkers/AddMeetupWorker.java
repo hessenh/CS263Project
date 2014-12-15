@@ -14,8 +14,16 @@ import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddMeetupWorker.
+ */
 public class AddMeetupWorker extends HttpServlet {
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	 
+ 	/* (non-Javadoc)
+ 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+ 	 */
+ 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     
 		 

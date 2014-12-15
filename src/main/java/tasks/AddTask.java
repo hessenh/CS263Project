@@ -27,10 +27,19 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddTask.
+ */
 public class AddTask extends HttpServlet {
+	
+	/** The blobstore service. */
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	 /* (non-Javadoc)
+ 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+ 	 */
+ 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     String taskName = request.getParameter("taskName");
 	     String taskInfo = request.getParameter("taskInfo");

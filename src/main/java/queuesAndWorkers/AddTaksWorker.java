@@ -15,8 +15,16 @@ import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddTaksWorker.
+ */
 public class AddTaksWorker extends HttpServlet {
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	 
+ 	/* (non-Javadoc)
+ 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+ 	 */
+ 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     String taskName = request.getParameter("taskName");
 	     String taskInfo = request.getParameter("taskInfo");

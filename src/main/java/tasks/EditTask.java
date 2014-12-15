@@ -28,8 +28,16 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EditTask.
+ */
 public class EditTask extends HttpServlet {
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	 
+ 	/* (non-Javadoc)
+ 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+ 	 */
+ 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 		 
 		 HttpSession session = request.getSession();

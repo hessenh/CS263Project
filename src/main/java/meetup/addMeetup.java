@@ -10,8 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class addMeetup.
+ */
 public class addMeetup extends HttpServlet {
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	 
+ 	/* (non-Javadoc)
+ 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+ 	 */
+ 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 		 
 		 HttpSession session = request.getSession();

@@ -12,7 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GetCourse.
+ */
 public class GetCourse extends HttpServlet {
+    
+    /* (non-Javadoc)
+     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String course = request.getParameter("courseName");

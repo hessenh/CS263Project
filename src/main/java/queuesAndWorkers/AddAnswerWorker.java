@@ -23,8 +23,16 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddAnswerWorker.
+ */
 public class AddAnswerWorker extends HttpServlet {
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	 
+ 	/* (non-Javadoc)
+ 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+ 	 */
+ 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     String answer = request.getParameter("answer");
 	     String questionTitle = request.getParameter("questionTitle");

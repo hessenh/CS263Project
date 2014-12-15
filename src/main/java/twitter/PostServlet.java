@@ -9,9 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PostServlet.
+ */
 public class PostServlet extends HttpServlet {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2132731135996613711L;
 
+    /* (non-Javadoc)
+     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String text = "Check out this meetup! #CS263Project \n"+ request.getSession().getAttribute("meetupName")+"is going to be awsome! \n" 
