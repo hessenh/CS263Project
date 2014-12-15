@@ -26,37 +26,41 @@ To see all the available goals for the App Engine plugin, run
 
 
 
-
-
+The package called "queuesAndWorkers" are not in use in the online application now. This is mainly b/c of the site is redirecting the user back before the workers have updated the datastore. I have chosen to have the implimentation without the queues for now. If this application is going to scale up, it would be easy to implement these changes. 
 
 ###Todo:
 ####Course
 - Adding - Done
 - UI - Done
 - Memcach - Done
+- QandW
 
 ####Chapters
 - Adding/delete/update - Done
 - UI - Done
 - Memcache - Done
+- QandW
 
 ####Task
 - Adding/delete/update - Done
 - UI - Done
 - Memcache - Done
 - Blobstore - Done
+- QandW
 
 ####Discuss
 - UI - Done
 - Adding - Done
 - Commenting - Done 
 - Memcache - Done
+- QandW
 
 ####Meetup
 - Ui - Done
 - Create - Done
 - View - Done
 - Memcache - Done
---
+- QandW
+
 
 
