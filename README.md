@@ -2,6 +2,8 @@
 
 http://hansolahucsb.appspot.com/ 
 
+The package called "queuesAndWorkers" are not in use in the online application now. This is mainly b/c of the site is redirecting the user back before the workers have updated the datastore. I have chosen to have the implimentation without the queues for now. If this application is going to scale up, it would be easy to implement these changes. 
+
 ## Skeleton application for use with App Engine Java.
 
 Requires [Apache Maven](http://maven.apache.org) 3.0 or greater, and JDK 6+ in order to run.
@@ -26,7 +28,7 @@ To see all the available goals for the App Engine plugin, run
 
 
 
-The package called "queuesAndWorkers" are not in use in the online application now. This is mainly b/c of the site is redirecting the user back before the workers have updated the datastore. I have chosen to have the implimentation without the queues for now. If this application is going to scale up, it would be easy to implement these changes. 
+
 
 ###Todo:
 ####Course
