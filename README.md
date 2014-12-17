@@ -9,7 +9,6 @@ In this application you can sign in with your google account. You could keep tra
 
 There is a discussion where you could ask and answer questions. The last part of the application is a place where you could create meetups or participate on future meetups. You could also tweet about different events. 
 
-The last part is 
 ## Skeleton application for use with App Engine Java.
 
 Requires [Apache Maven](http://maven.apache.org) 3.0 or greater, and JDK 6+ in order to run.
