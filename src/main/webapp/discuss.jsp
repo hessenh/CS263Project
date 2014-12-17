@@ -51,6 +51,7 @@
 	        </div>
 	    </div>
 <%
+//Getting the question from datastore or memcache
 List<Entity> questions;
 UserService userService = UserServiceFactory.getUserService();
 User user = userService.getCurrentUser();
@@ -78,7 +79,7 @@ if(!questions.isEmpty()){
 		//int i = (e.getProperty("questionTitle").toString().length() < 10)?e.getProperty("questionTitle").toString().length():10;
         pageContext.setAttribute("questionTitle",
                 e.getProperty("questionTitle"));
-        
+        //To not display the whole questionInfo. Just the first 10 characters
         int j = (e.getProperty("questionInfo").toString().length() < 10)?e.getProperty("questionInfo").toString().length():10;
         pageContext.setAttribute("questionInfo",
                 e.getProperty("questionInfo").toString().substring(0, j)+"...");

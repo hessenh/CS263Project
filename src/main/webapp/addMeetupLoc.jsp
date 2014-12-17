@@ -10,6 +10,8 @@
         <meta charset="utf-8">
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
         <script type="text/javascript">
+        
+        //Setting up the map
             var map;
             var marker;
             var geocoder; //2a
@@ -30,18 +32,18 @@
                     placeMarker(event.latLng);
                 });
             }
+            //Function to place the marker
             function placeMarker(location) {
             	marker.setMap(null);
                 marker = new google.maps.Marker({
                     position: location,
                     map: map
                 });
-                //3 - all code until 
+				//Setting the hidden html variables
                 document.getElementById('lat').value=location.lat();
             	document.getElementById('lng').value=location.lng();
             	
-                //$("#longitude").val(location.lng());  
-               //$("#latitude").val(location.lat());
+            
                 
                 geocoder.geocode( { 'latLng': location}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
@@ -52,7 +54,6 @@
                         alert("Geocode was not successful for the following reason: " + status);
                     }
                 });
-                //the end of (3)
                 map.setCenter(location);
             }
         </script>

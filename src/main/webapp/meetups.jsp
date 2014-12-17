@@ -35,6 +35,7 @@
 
 
 <%
+//Config the twitter restAPI
 ConfigurationBuilder builder = new ConfigurationBuilder();
 
 builder.setOAuthAccessToken("310273362-huWbROL2e1JbIFtV5nLalXF7VNFqh45MxY2i7lIN");
@@ -46,6 +47,7 @@ Configuration configuration = builder.build();
 TwitterFactory tf = new TwitterFactory(configuration);
 Twitter twitter = tf.getInstance();
 
+//Query for tweets with hastag CS263Project
 Query query = new Query("CS263Project");
 QueryResult result = null;
 try {
@@ -53,6 +55,7 @@ try {
 } catch (TwitterException e) {
 	e.printStackTrace();
 }
+//Fetch the list of tweets
 List<Status> tweetList = result.getTweets();
 
 if(!tweetList.isEmpty()){

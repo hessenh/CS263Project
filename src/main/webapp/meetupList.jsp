@@ -36,13 +36,16 @@
 		<div class="col-md-12 col-lg-12">
 			<h1>Meetups!</h1>
 			<%
+				//Get the different meetups from datastore or memcache
 				List<Entity> meetups;
 			
 				MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
 			 	syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
 			 	
+			 	//Try to get from memcache
 			 	meetups =  (List<Entity>) syncCache.get("meetups");
 			 
+			 	//If it fails, go to the datastore
 			 	if(meetups==null){
 			 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 				 	
@@ -52,6 +55,7 @@
 				    meetups = pq.asList(FetchOptions.Builder.withLimit(10));
 				    System.out.println(meetups.size());
 				    System.out.println("Putting meetups in memcache. Key is 'meetups'");
+				    //Put in memcache
 				    syncCache.put("meetups",meetups);
 			 	}
 			 	else{
@@ -62,6 +66,7 @@
 			%>
 				<h3>No meetups yet.. Create one! </h3>
 			<%
+				//Display all the different meetups
 			    }else{
 			    	for (Entity e : meetups) {
 			            pageContext.setAttribute("meetupName",e.getProperty("meetupName"));

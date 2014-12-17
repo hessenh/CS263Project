@@ -22,6 +22,7 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 
 <%
+	
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
 <html>
@@ -32,9 +33,11 @@
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 <%
+	//Fetching the task from the datastore and dispaly it on the html
 	UserService userService = UserServiceFactory.getUserService();
 	User user = userService.getCurrentUser();
 	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+	//Filters for the query
 	Filter taskFilter =new FilterPredicate("taskName",FilterOperator.EQUAL,session.getAttribute("task"));
 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
 	Filter courseFilter = new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
@@ -43,7 +46,7 @@
 	PreparedQuery pq = ds.prepare(q);
 	
 	Entity taskEntity = pq.asSingleEntity();
-		
+	//Setting the html content from the entity
 	pageContext.setAttribute("taskInfo",taskEntity.getProperty("taskInfo"));
 	pageContext.setAttribute("taskName",taskEntity.getProperty("taskName"));
 %>

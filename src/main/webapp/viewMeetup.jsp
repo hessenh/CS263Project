@@ -29,6 +29,7 @@
 	<meta charset="utf-8">
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
 	<script type="text/javascript">
+		//Setting up the map
 	    var map;
 	    var marker;
 	    var geocoder; //2a
@@ -64,7 +65,7 @@
 		response.sendRedirect(userService.createLoginURL(request.getRequestURI()+"?meetupName=" + request.getParameter("meetupName")));
 	}
 	else{
-	
+	//Fecthing the meetup from datastore or memcahce
 	String meetupName = request.getParameter("meetupName");
 	pageContext.setAttribute("meetupName",meetupName);
 	
@@ -95,6 +96,7 @@
 	else{
 		System.out.println("Getting meetup from memcache");
 	}
+	//Setting the different html fields 
     pageContext.setAttribute("meetupName",meetupEntity.getProperty("meetupName"));
     pageContext.setAttribute("meetupInfo",meetupEntity.getProperty("meetupInfo"));
     pageContext.setAttribute("meetupDate",meetupEntity.getProperty("meetupDate"));
@@ -118,6 +120,7 @@
 	<div class="col-lg-4">
 		<h3>Participants:</h3>
 <%
+		//Fetching the participants and finding out if the current user is attending
 		Boolean isAttending = false;
 		syncCache = MemcacheServiceFactory.getMemcacheService();
 		syncCache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
@@ -143,6 +146,7 @@
 				<h3>No participants!</h3>
 			<%
 	    }else{
+	    	//Dispaly the people attending
     		for (Entity e : meetupAttending) {
 	    		if(e.getProperty("userId").equals(user.getUserId())){
 	    			isAttending = true;
@@ -156,6 +160,7 @@
 			<%
 			}
   			}
+		//If curent user is attending or not, show button depending on result
 		if(!isAttending){
 	   		%>
 		<form action="/meetupAttend" method="post">

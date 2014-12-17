@@ -52,6 +52,7 @@
 				
 				<h2>Chapters:</h2>
 <%
+	//Fetch the different chapters for the specific course from the datastore and memcache
 	List<Entity> chapters;
 
 	MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
@@ -82,6 +83,7 @@
 
 <%
     }else{
+    	//Display each chapter
     	for (Entity e : chapters) {
             pageContext.setAttribute("chapter_content",
                     e.getProperty("chapterName"));

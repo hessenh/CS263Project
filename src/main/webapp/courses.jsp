@@ -36,6 +36,7 @@
 		<div class="col-md-12 col-lg-12">
 			<h1>Courses</h1>
 			<%
+				//Getting the list of course entities from memcache or datastore
 				List<Entity> courses;
 				UserService userService = UserServiceFactory.getUserService();
 				User user = userService.getCurrentUser();
@@ -66,6 +67,7 @@
 			%>
 				<h3>No courses yet!</h3>
 			<%
+			//Display all the different courses
 			    }else{
 			    	for (Entity e : courses) {
 			            pageContext.setAttribute("course_content",

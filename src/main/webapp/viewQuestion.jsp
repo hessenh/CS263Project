@@ -30,7 +30,7 @@
 <body> 
 	<jsp:include page="/navbar.jsp"></jsp:include>
 <%	
-	
+	//Fetching question from datastore or memcache
 	String questionTitle = request.getParameter("questionTitle");
 	session.setAttribute("questionTitle", questionTitle);
 	pageContext.setAttribute("questionTitle",questionTitle);
@@ -60,6 +60,7 @@
 		System.out.println("Getting question from memcache");
 	}
 	session.setAttribute("questionInfo", questionEntity.getProperty("questionInfo"));
+	//Setting the different html fields
     pageContext.setAttribute("questionTitle",questionEntity.getProperty("questionTitle"));
     pageContext.setAttribute("questionInfo",questionEntity.getProperty("questionInfo"));
 %>
@@ -73,6 +74,7 @@
 <div class="col-lg-10 col-lg-offset-2">
 	<div class="col-lg-4">
 <%
+		//Fetching the answer to the current question from memcahce or datastore
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		syncCache = MemcacheServiceFactory.getMemcacheService();
@@ -98,6 +100,7 @@
 				<h3></h3>
 			<%
 	    }else{
+	    	//Display answers
     		for (Entity e : questionAnswers) {
 	            pageContext.setAttribute("answer",
 	                    e.getProperty("answer"));

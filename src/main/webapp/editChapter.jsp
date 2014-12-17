@@ -27,9 +27,11 @@
 
 <jsp:include page="/navbar.jsp"></jsp:include>
 <%
+	//Fetching the chapter from the datastore and setting the different values in the html
 	UserService userService = UserServiceFactory.getUserService();
 	User user = userService.getCurrentUser();
 	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+	//Filters for the query
 	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
 	Filter chapterFilter = new FilterPredicate("chapterName",FilterOperator.EQUAL,session.getAttribute("chapter"));
@@ -38,7 +40,8 @@
 	PreparedQuery pq = ds.prepare(q);
 	
 	Entity chapterEntity= pq.asSingleEntity();
-		
+	
+	//Set the content of the html
 	pageContext.setAttribute("chapterSummary",chapterEntity.getProperty("summary"));
 	pageContext.setAttribute("chapterName",chapterEntity.getProperty("chapterName"));
 %>

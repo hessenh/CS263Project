@@ -26,6 +26,7 @@
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 <%
+	//Getting the different summaries from datastore
 	
 	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 	UserService userService = UserServiceFactory.getUserService();
@@ -34,7 +35,7 @@
 	session = request.getSession(true);
 	Filter courseFilter =new FilterPredicate("course",FilterOperator.EQUAL,session.getAttribute("course"));
 	Filter userFilter = new FilterPredicate("user",FilterOperator.EQUAL,user.getUserId());
-	
+	//Setting up query
     Query q = new Query("Chapters").setFilter(userFilter).setFilter(courseFilter);
     PreparedQuery pq = ds.prepare(q);
     
@@ -52,6 +53,7 @@
 %>
     		<h3>No chapters yet!</h3>
 <%
+	//Dispaly the summaries
     }else{
  	    	for (Entity e : summaryList) {
  	            pageContext.setAttribute("chapterName",e.getProperty("chapterName"));

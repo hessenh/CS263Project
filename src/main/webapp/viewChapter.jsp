@@ -30,6 +30,7 @@
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 <%	
+	//Fetching the chapter from the datastore or memcahce
 	UserService userService = UserServiceFactory.getUserService();
 	User user = userService.getCurrentUser();
 	
@@ -46,6 +47,7 @@
 	
 	Entity chapterEntity = (Entity) syncCache.get(key);
 	
+	//Checking if chapter is in memcache
 	if(chapterEntity ==null){
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		
@@ -66,7 +68,7 @@
 		System.out.println("Getting chapter from memcache");
 	}
 	
-  	
+  	//Setting html content
     pageContext.setAttribute("chapterSummary",chapterEntity.getProperty("summary"));
     pageContext.setAttribute("courseName",session.getAttribute("course"));
     

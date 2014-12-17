@@ -14,6 +14,7 @@
             <a class="navbar-brand" href="/index.jsp">Home</a>
         </div>
         <% 
+        	//Check if the user is logged in and display content depending on that
 			UserService userService = UserServiceFactory.getUserService();
 			User user = userService.getCurrentUser();
 			if(user == null){

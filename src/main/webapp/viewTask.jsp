@@ -30,6 +30,7 @@
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 <%	
+	//Fetch the task from memcache or datastore
 	UserService userService = UserServiceFactory.getUserService();
 	User user = userService.getCurrentUser();
 	String task = request.getParameter("taskName");
@@ -45,6 +46,7 @@
 	
 	Entity taskEntity = (Entity) syncCache.get(key);
 	
+	//If memcahce fails
 	if(taskEntity ==null){
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		
@@ -59,6 +61,7 @@
 	    
 	    taskEntity= pq.asSingleEntity();
 	    
+	    //Putting task in memcache
 	    syncCache.put(key, taskEntity);
 	    System.out.println("Putting task in memcache with key: " + key);
 	}
@@ -66,7 +69,7 @@
 		System.out.println("Getting task from memcache");
 	}
 	
-  	
+  	//Setting the different html fields
     pageContext.setAttribute("taskInfo",taskEntity.getProperty("taskInfo"));
     pageContext.setAttribute("courseName",session.getAttribute("course"));
     pageContext.setAttribute("fileKey",taskEntity.getProperty("file"));

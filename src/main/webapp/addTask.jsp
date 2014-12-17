@@ -6,6 +6,7 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 
 <%
+	//Setting up the blobstore
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
 <html>
