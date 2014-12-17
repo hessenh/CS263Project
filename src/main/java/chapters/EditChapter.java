@@ -33,9 +33,9 @@ import com.google.appengine.api.users.UserServiceFactory;
  * The Class EditChapter.
  */
 public class EditChapter extends HttpServlet {
-	 
- 	/* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Deletes, updates a chapter in the Datastore. 
+ 	 * Takes care of updating memcache. 
  	 */
  	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {

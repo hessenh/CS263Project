@@ -17,9 +17,6 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.files.dev.Session;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -31,15 +28,19 @@ import com.google.appengine.api.users.UserServiceFactory;
 /**
  * The Class AddTask.
  */
+@SuppressWarnings("serial")
 public class AddTask extends HttpServlet {
 	
 	/** The blobstore service. */
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	
-	 /* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Adding a new task in the datastore. 
+ 	 * Handles the file given by the user.
+ 	 * Takes care of updating memcache. 
  	 */
- 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+ 	@SuppressWarnings("deprecation")
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
 	     String taskName = request.getParameter("taskName");
 	     String taskInfo = request.getParameter("taskInfo");
@@ -49,14 +50,14 @@ public class AddTask extends HttpServlet {
 	     
 	     
 	     HttpSession session = request.getSession();
-	     // Do something with key.
+	     
 	     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	     
 	     //Blobstore
 	     Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
 	     BlobKey blobKey = blobs.get("myFile");
 	 
-	     Entity task = new Entity("Tasks");//Removed key
+	     Entity task = new Entity("Tasks");
 	     Date date = new Date();
 	     task.setProperty("date", date);
 	     task.setProperty("taskName", taskName);

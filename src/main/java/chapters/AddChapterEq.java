@@ -23,8 +23,8 @@ import com.google.appengine.api.users.UserServiceFactory;
  */
 public class AddChapterEq extends HttpServlet {
     
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+    /** 
+     * Handles adding new chapters in the work queue. 
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

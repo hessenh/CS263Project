@@ -32,10 +32,12 @@ import com.google.appengine.api.users.UserServiceFactory;
 /**
  * The Class MeetupAttend.
  */
+@SuppressWarnings("serial")
 public class MeetupAttend extends HttpServlet {
 	 
- 	/* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Changing the attendance status for a given meetup.
+ 	 * Takes care of updating memcache. 
  	 */
  	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {

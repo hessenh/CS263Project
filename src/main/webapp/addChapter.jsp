@@ -10,7 +10,6 @@
 <body>
 <jsp:include page="/navbar.jsp"></jsp:include>
 
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-lg-10">

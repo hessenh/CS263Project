@@ -18,9 +18,10 @@ import com.google.appengine.api.taskqueue.QueueFactory;
  */
 public class GetCourse extends HttpServlet {
     
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
+	/**
+ 	 * Only used to redirect user.
+ 	 * 
+ 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String course = request.getParameter("courseName");

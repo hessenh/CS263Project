@@ -1,7 +1,6 @@
 package meetup;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.logging.Level;
 
 import javax.servlet.ServletException;
@@ -10,14 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import plus.notifyGooglePlus;
-import twitter.confTwitter;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -29,10 +23,12 @@ import com.google.appengine.api.users.UserServiceFactory;
 /**
  * The Class addMeetup2.
  */
+@SuppressWarnings("serial")
 public class addMeetup2 extends HttpServlet {
 	 
- 	/* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Adding a new meetup in the Datastore
+ 	 * Takes care of updating memcache. 
  	 */
  	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {
@@ -58,7 +54,7 @@ public class addMeetup2 extends HttpServlet {
 	     meetup.setProperty("meetupLng", lng);
 	     meetup.setProperty("user", user.getUserId());
 	 
-	     confTwitter twitter = new confTwitter();
+//	     confTwitter twitter = new confTwitter();
 	     
 	     datastore.put(meetup);
 	     

@@ -34,8 +34,9 @@ import com.google.appengine.api.users.UserServiceFactory;
  */
 public class EditTask extends HttpServlet {
 	 
- 	/* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Updating a task in the Datastore. Either delete update or cancel. 
+ 	 * Takes care of updating memcache. 
  	 */
  	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {

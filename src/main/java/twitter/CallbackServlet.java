@@ -19,9 +19,10 @@ public class CallbackServlet extends HttpServlet {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1657390011452788111L;
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
+    /**
+ 	 * doGet - Twitter setup
+ 	 *
+ 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
         RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");

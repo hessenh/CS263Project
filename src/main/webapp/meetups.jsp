@@ -51,7 +51,6 @@ QueryResult result = null;
 try {
 	result = twitter.search(query);
 } catch (TwitterException e) {
-	// TODO Auto-generated catch block
 	e.printStackTrace();
 }
 List<Status> tweetList = result.getTweets();
@@ -64,7 +63,7 @@ if(!tweetList.isEmpty()){
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-lg-10">
-			<div class="jumbotron meetup">
+			<div class="jumbotron twitter">
 				<h3>${fn:escapeXml(twitterUser)}</h3>
 				<p>${fn:escapeXml(twitterText)}</p>
 			</div>

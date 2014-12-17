@@ -3,6 +3,7 @@ package meetup;
 import java.io.IOException;
 
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,11 @@ import javax.servlet.http.HttpSession;
 /**
  * The Class addMeetup.
  */
+@SuppressWarnings("serial")
 public class addMeetup extends HttpServlet {
 	 
- 	/* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Stores different session variables in the process of creating a meetup. 
  	 */
  	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {

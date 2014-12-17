@@ -29,8 +29,9 @@ import com.google.appengine.api.users.UserServiceFactory;
  */
 public class addAnswer extends HttpServlet {
 	 
- 	/* (non-Javadoc)
- 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+ 	 * doPost - Adding a new answer to a specified question entity in the Datastore.  
+ 	 * Takes care of updating memcache. 
  	 */
  	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	         throws ServletException, IOException {

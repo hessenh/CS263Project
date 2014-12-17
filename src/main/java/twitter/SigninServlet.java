@@ -20,9 +20,9 @@ public class SigninServlet extends HttpServlet {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6205814293093350242L;
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
+    /**
+ 	 * doGet - Sign in with twitter 
+ 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Twitter twitter = new TwitterFactory().getInstance();
         request.getSession().setAttribute("twitter", twitter);
